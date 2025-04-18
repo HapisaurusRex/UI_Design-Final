@@ -1,0 +1,29 @@
+<!-- Placeholder Jinja2 Template (Deciding on react or not) -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- jquery -->
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>  
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+
+        <!-- Tell Flask to load these files -->
+        <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
+        <title>Page</title>
+    </head>
+    <body>
+        
+
+        <script type="text/javascript" src="{{ url_for('static', filename = 'temp.js') }}"></script>
+        <div class="container" id="content">
+            <!-- Anything inserted here has the stuff in the head area already loaded-->   
+            {% block content %}
+            {% endblock %}
+        </div>
+        
+    </body>
+</html>
