@@ -28,9 +28,9 @@ def view(id):
     entry = data[int(id)]
     #Pass info to html
     return render_template('item.html',data = entry, all_data = data)
-@app.route('/quiz/<id>')
-def view(id):
 
+@app.route('/quiz/<id>')
+def quiz(id):
     return render_template('item.html')
 
 # Necessary to run
