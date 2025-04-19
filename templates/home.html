@@ -3,28 +3,36 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h1 class="text-center fw-bold mb-4">The 3 keys to dressing for the weather</h1>
+  <h1 class="text-center fw-bold mb-4">The 3 keys to dressing for the weather</h1>
 
-<div class="triangle-container mx-auto">
-    <svg viewBox="0 0 200 173" width="300" height="260">
+  <div class="triangle-container">
+    <svg class="triangle-svg" viewBox="0 0 300 260">
 
-        <a href="{{ url_for('layer') }}">
-            <polygon points="100,0 50,87 150,87" fill="white" stroke="black" stroke-width="2"
-                     class="triangle-btn"/>
-            <text x="100" y="55" text-anchor="middle" font-size="10" fill="black">Layering</text>
-        </a>
 
-        <a href="{{ url_for('weather') }}">
-            <polygon points="50,87 0,173 100,173" fill="white" stroke="black" stroke-width="2"
-                     class="triangle-btn"/>
-            <text x="45" y="145" text-anchor="middle" font-size="10" fill="black">Material</text>
-        </a>
+      <polygon points="150,0 0,260 300,260"
+               fill="none" stroke="black" stroke-width="2"/>
+      <line x1="150" y1="0"    x2="150" y2="173.2" stroke="black" stroke-width="1.5"/>
+      <line x1="0"   y1="260"  x2="150" y2="173.2" stroke="black" stroke-width="1.5"/>
+      <line x1="300" y1="260"  x2="150" y2="173.2" stroke="black" stroke-width="1.5"/>
 
-        <a href="{{ url_for('clothing') }}">
-            <polygon points="150,87 100,173 200,173" fill="white" stroke="black" stroke-width="2"
-                     class="triangle-btn"/>
-            <text x="155" y="145" text-anchor="middle" font-size="10" fill="black">Clothing Type</text>
-        </a>
+      <a href="{{ url_for('layer') }}">
+        <polygon points="150,0 0,260 150,173.2" class="triangle-btn"/>
+        <text x="100" y="150" text-anchor="middle" font-size="10">Layering</text>
+      </a>
+
+      <a href="{{ url_for('weather') }}">
+        <polygon points="0,260 300,260 150,173.2" class="triangle-btn"/>
+        <text x="150" y="230" text-anchor="middle" font-size="12">Material</text>
+      </a>
+
+      <a href="{{ url_for('clothing') }}">
+        <polygon points="300,260 150,0 150,173.2" class="triangle-btn"/>
+        <text x="200" y="150" text-anchor="middle" font-size="10">
+          <tspan x="200">Clothing</tspan>
+          <tspan x="200" dy="12">Type</tspan>
+        </text>
+      </a>
+
     </svg>
-</div>
+  </div>
 {% endblock %}

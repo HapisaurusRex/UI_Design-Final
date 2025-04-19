@@ -1,16 +1,22 @@
 /* CSS for our page */
 .triangle-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  max-width: 600px;     /* make it bigger on large screens */
+  margin: 0 auto;
+}
+
+.triangle-svg {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .triangle-btn {
-    transition: fill 0.2s ease;
-    cursor: pointer;
+  fill: transparent;
+  cursor: pointer;
+  transition: fill 0.2s ease;
+}
+.triangle-btn:hover {
+  fill: #f0f0f0;
 }
 
-.triangle-btn:hover {
-    fill: #e0e0e0;
-}
 
