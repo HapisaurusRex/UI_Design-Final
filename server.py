@@ -9,30 +9,43 @@ from flask import redirect,url_for
 
 app = Flask(__name__)
 
+# Sample data (for existing item view)
 data = {
-    1: { ''' Example data style'''
+    1: {
         "title": "Casino Royale",
         "image": "https://m.media-amazon.com/images/M/MV5BMTM5MjI4NDExNF5BMl5BanBnXkFtZTcwMDM1MjMzMQ@@._V1_.jpg",
     }
 }
+
 # ROUTES
 @app.route('/')
 def home():
-    global data
-    return render_template('home.html')   
+    # Home page
+    return render_template('home.html')
 
-@app.route('/view/<id>')
+@app.route('/layer')
+def layer():
+    return render_template('layer.html')
+
+@app.route('/weather')
+def weather():
+    return render_template('weather.html')
+
+@app.route('/clothing')
+def clothing():
+    return render_template('clothing.html')
+
+@app.route('/quiz')
+def quiz():
+    return render_template('quiz.html')
+
+@app.route('/view/<int:id>')
 def view(id):
-    # Get the data entry
-    global data
-    entry = data[int(id)]
-    #Pass info to html
-    return render_template('item.html',data = entry, all_data = data)
+    # Get the data entry or return 404
+    entry = data.get(id)
+    if not entry:
+        return "Item not found", 404
+    return render_template('item.html', data=entry, all_data=data)
 
-@app.route('/quiz/<id>')
-def quiz(id):
-    return render_template('item.html')
-
-# Necessary to run
 if __name__ == '__main__':
-   app.run(debug = True, port=5001)
+    app.run(debug=True, port=5001)

@@ -2,28 +2,44 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <!-- jquery -->
-        <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>  
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Site{% endblock %}</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    
+    {% block styles %}<link rel="stylesheet" href="../static/main.css">{% endblock %}
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Main Navigation">
+		<div class="container-fluid border-bottom">
+			<a class="navbar-brand" href="/">Home</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+					data-bs-target="#navbarNav" aria-controls="navbarNav" 
+					aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link" href="/layer">Layer</a></li>
+					<li class="nav-item"><a class="nav-link" href="/weather">Weather</a></li>
+					<li class="nav-item"><a class="nav-link" href="/clothing">Clothing</a></li>
+					<li class="nav-item"><a class="nav-link" href="/quiz">Quiz</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <main class="container mt-4">
+        {% block content %}{% endblock %}
+    </main>
 
-        <!-- Tell Flask to load these files -->
-        <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
-        <title>Page</title>
-    </head>
-    <body>
-        
-
-        <script type="text/javascript" src="{{ url_for('static', filename = 'temp.js') }}"></script>
-        <div class="container" id="content">
-            <!-- Anything inserted here has the stuff in the head area already loaded-->   
-            {% block content %}
-            {% endblock %}
-        </div>
-        
-    </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
 </html>
