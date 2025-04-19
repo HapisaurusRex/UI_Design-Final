@@ -3,8 +3,28 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<h1 class="text-center fw-bold mb-4">The 3 keys to dressing for the weather</h1>
 
-<script type="text/javascript" src="{{ url_for('static', filename = 'temp.js') }}"></script>
+<div class="triangle-container mx-auto">
+    <svg viewBox="0 0 200 173" width="300" height="260">
 
+        <a href="{{ url_for('layer') }}">
+            <polygon points="100,0 50,87 150,87" fill="white" stroke="black" stroke-width="2"
+                     class="triangle-btn"/>
+            <text x="100" y="55" text-anchor="middle" font-size="10" fill="black">Layering</text>
+        </a>
 
+        <a href="{{ url_for('weather') }}">
+            <polygon points="50,87 0,173 100,173" fill="white" stroke="black" stroke-width="2"
+                     class="triangle-btn"/>
+            <text x="45" y="145" text-anchor="middle" font-size="10" fill="black">Material</text>
+        </a>
+
+        <a href="{{ url_for('clothing') }}">
+            <polygon points="150,87 100,173 200,173" fill="white" stroke="black" stroke-width="2"
+                     class="triangle-btn"/>
+            <text x="155" y="145" text-anchor="middle" font-size="10" fill="black">Clothing Type</text>
+        </a>
+    </svg>
+</div>
 {% endblock %}
