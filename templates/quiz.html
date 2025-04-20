@@ -1,3 +1,176 @@
 {% extends "layout.html" %}
-{% block title %}Quiz{% endblock %}
-{% block content %}{% endblock %}
+
+{% block title %}Quiz - Drag to layer Scooter for the Weather{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+  <h2>Quiz - Drag to layer Scooter for the Weather</h2>
+</div>
+
+<div class="row">
+  <!-- Scooter image dropzone -->
+  <div class="col-md-4 position-relative" id="scooter-container">
+    <!-- Scooter image -->
+    <img id="scooter" src="{{ url_for('static', filename='Images/scooter.png') }}" 
+         alt="Scooter" class="img-fluid border">
+    <div id="feedback-box" class="position-absolute bg-white p-2 border rounded"
+         style="top:10px; right:10px; display:none; width:180px;"></div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="mb-4">
+      <h4>Cold, Windy with Light Snow <small>(20–30°F / –6 to 1°C)</small></h4>
+    </div>
+
+    <!-- Base Layer -->
+    <div id="layer-base" class="layer-section mb-4">
+      <h5>Base Layer:</h5>
+      <div class="d-flex">
+        <div class="option text-center mx-2">
+          <img src="{{ url_for('static', filename='Images/woolShirt.png') }}" 
+               alt="Wool Shirt" class="material img-thumbnail uniform-img" data-name="Wool" draggable="true" data-layer="base">
+          <p>Wool</p>
+        </div>
+        <div class="option text-center mx-2">
+          <img src="{{ url_for('static', filename='Images/cottonShirt.png') }}" 
+               alt="Cotton Shirt" class="material img-thumbnail uniform-img" data-name="Cotton" draggable="true" data-layer="base">
+          <p>Cotton</p>
+        </div>
+        <div class="option text-center mx-2">
+          <img src="{{ url_for('static', filename='Images/syntheticShirt.png') }}" 
+               alt="Synthetic Shirt" class="material img-thumbnail uniform-img" data-name="Synthetic" draggable="true" data-layer="base">
+          <p>Synthetic</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mid Layer -->
+    <div id="layer-mid" class="layer-section mb-4" style="display:none;">
+      <h5>Mid Layer:</h5>
+      <div class="d-flex">
+        <div class="option text-center mx-2">
+          <img src="{{ url_for('static', filename='Images/fleeceShirt.png') }}" 
+               alt="Fleece Shirt" class="material img-thumbnail uniform-img" data-name="Fleece" draggable="true" data-layer="mid">
+          <p>Fleece</p>
+        </div>
+        <div class="option text-center mx-2">
+          <img src="{{ url_for('static', filename='Images/downShirt.png') }}" 
+               alt="Down Shirt" class="material img-thumbnail uniform-img" data-name="Down" draggable="true" data-layer="mid">
+          <p>Down</p>
+        </div>
+        <div class="option text-center mx-2">
+          <img src="{{ url_for('static', filename='Images/woolShirt.png') }}" 
+               alt="Wool Shirt" class="material img-thumbnail uniform-img" data-name="Wool" draggable="true" data-layer="mid">
+          <p>Wool</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Outer Layer -->
+    <div id="layer-outer" class="layer-section mb-4" style="display:none;">
+      <h5>Outer Layer:</h5>
+      <div class="d-flex">
+        <div class="option text-center mx-2">
+          <img src="{{ url_for('static', filename='Images/goretexShirt.png') }}" 
+               alt="GoreTex Shirt" class="material img-thumbnail uniform-img" data-name="GoreTex" draggable="true" data-layer="outer">
+          <p>GoreTex</p>
+        </div>
+        <div class="option text-center mx-2">
+          <img src="{{ url_for('static', filename='Images/downShirt.png') }}" 
+               alt="Down Shirt" class="material img-thumbnail uniform-img" data-name="Down" draggable="true" data-layer="outer">
+          <p>Down</p>
+        </div>
+        <div class="option text-center mx-2">
+          <img src="{{ url_for('static', filename='Images/PolartecShirt.png') }}" 
+               alt="Polartec Shirt" class="material img-thumbnail uniform-img" data-name="Polartec" draggable="true" data-layer="outer">
+          <p class="mb-0">Polartec<br>Power Shield</p>
+        </div>
+      </div>
+    </div>
+
+    <button id="resetBtn" class="btn btn-secondary">Reset</button>
+  </div>
+</div>
+
+<style>
+  .uniform-img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+  }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const layers = ['base', 'mid', 'outer'];
+const expected = {
+  base: 'Wool',
+  mid: 'Fleece',
+  outer: 'GoreTex'
+};
+const feedbackText = {
+  base: 'Merino wool is great for temperature regulation and moisture-wicking. It keeps you warm when it\'s cold but also breathable enough to wick sweat away.',
+  mid: 'Fleece is warm, breathable, and lightweight, making it a great mid-layer.',
+  outer: 'A Gore-Tex or similar waterproof and breathable material will keep the wind and snow out, while allowing moisture (from sweat) to escape.'
+};
+
+let current = 0;
+let dragged;
+const answered = {
+  base: false,
+  mid: false,
+  outer: false
+};
+
+function allowDragEvents() {
+  document.querySelectorAll('.material').forEach(el => {
+    el.addEventListener('dragstart', e => {
+      const itemLayer = el.dataset.layer;
+      if (itemLayer === layers[current] && !answered[itemLayer]) {
+        dragged = e.target;
+      } else {
+        dragged = null;
+      }
+    });
+  });
+}
+
+allowDragEvents();
+
+document.getElementById('scooter-container').addEventListener('dragover', e => e.preventDefault());
+
+document.getElementById('scooter-container').addEventListener('drop', e => {
+  e.preventDefault();
+  if (!dragged) return;
+
+  const layer = layers[current];
+  const chosen = dragged.dataset.name;
+  const fb = document.getElementById('feedback-box');
+  fb.style.display = 'block';
+
+  if (answered[layer]) return;
+
+  if (chosen === expected[layer]) {
+    fb.innerHTML = `<span class="text-success">✓</span> ${feedbackText[layer]}`;
+    answered[layer] = true;
+
+    current++;
+    if (current < layers.length) {
+      document.getElementById(`layer-${layers[current]}`).style.display = 'block';
+    }
+  } else {
+    fb.innerHTML = `<span class="text-danger">✗</span> Try again`;
+  }
+});
+
+document.getElementById('resetBtn').onclick = () => {
+  current = 0;
+  layers.forEach((layer, i) => {
+    answered[layer] = false;
+    document.getElementById(`layer-${layer}`).style.display = i === 0 ? 'block' : 'none';
+  });
+  document.getElementById('feedback-box').style.display = 'none';
+};
+</script>
+{% endblock %}
