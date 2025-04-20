@@ -27,9 +27,9 @@ def home():
 def layer():
     return render_template('layer.html')
 
-@app.route('/weather')
+@app.route('/material')
 def weather():
-    return render_template('weather.html')
+    return render_template('material.html')
 
 @app.route('/clothing')
 def clothing():
