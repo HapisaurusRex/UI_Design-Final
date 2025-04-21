@@ -1,0 +1,26 @@
+.header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Progress Triangle */
+.triangleContainer {
+    max-width: 600px;     /* make it bigger on large screens */
+    margin: 0 auto;
+  }
+  
+  .triangleSvg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .triangleBtn {
+    fill: transparent;
+    cursor: pointer;
+    transition: fill 0.2s ease;
+  }
+  .triangleBtn:hover {
+    fill: #f0f0f0;
+  }

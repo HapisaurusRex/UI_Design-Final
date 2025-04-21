@@ -1,0 +1,89 @@
+.weave {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 250px;
+  }
+  
+  .circle,
+  .gap {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #eee;
+  }
+  
+  .gap {
+    background: none;
+    border: 2px dashed #aaa;
+    position: relative;
+  }
+  
+  .plug {
+    width: 100%;
+    height: 100%;
+    background: #ccc;
+    border-radius: 50%;
+  }
+  
+  .block.rect {
+    width: 100px;
+    height: 30px;
+    background: #ddd;
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    cursor: grab;
+    border-radius: 8px;
+  }
+  
+  .block.circle {
+    width: 50px;
+    height: 50px;
+    background: #ddd;
+    border-radius: 50%;
+    position: absolute;
+    top: 160px;
+    left: 200px;
+    cursor: grab;
+  }
+  
+  .weave {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    margin-top: 40px;
+    position: relative;
+  }
+  
+  .gap-rect {
+    width: 100px;
+    height: 30px;
+    background: none;
+    border: 2px dashed #aaa;
+    border-radius: 8px;
+  }
+  
+  .plug-rect {
+    width: 100%;
+    height: 100%;
+    background: #ccc;
+    border-radius: 8px;
+  }
+  
+  .gap-circle {
+    width: 60px;
+    height: 60px;
+    background: none;
+    border: 2px dashed #aaa;
+    border-radius: 50%;
+  }
+  
+  .plug-circle {
+    width: 100%;
+    height: 100%;
+    background: #ccc;
+    border-radius: 50%;
+  }

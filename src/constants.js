@@ -1,0 +1,6 @@
+export const CLOTH1 = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpng.pngtree.com%2Fthumb_back%2Ffh260%2Fbackground%2F20220624%2Fpngtree-macro-of-fabric-weave-texture-surface-modern-industrial-zoom-photo-image_32011714.jpg&f=1&nofb=1&ipt=fe9a04bf1f4630557dd3633b017a57bfe2a962b788c3d60f2404f1b57b4686ac"
+export const CLOTH2 = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fas2.ftcdn.net%2Fv2%2Fjpg%2F07%2F90%2F00%2F89%2F1000_F_790008903_iwsJCxvWoqwGpkOWNxPlRCmTmABhuI4A.jpg&f=1&nofb=1&ipt=ac9146fd1da11593d10069ddd1861434df3029bf3dc1258be2c56a836763395c"
+export const CLOTH3 = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.mainlinemenswear.co.uk%2Fw_900%2Ch_900%2Ff_auto%2Cq_auto%2Fmainlinemenswear%2Fshopimages%2Fproducts%2F173593%2FAlternative1.jpg&f=1&nofb=1&ipt=e83eec8b9a064cb778a4a68bc4389929e9865301297f3bb2edd80b4b7cdb230a"
+
+
+export const MAT1 ="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fa2%2F5c%2F19%2Fa25c198273a072fc9a608ee01a3bff80.png&f=1&nofb=1&ipt=e3ada5fc4f7bfb73fbd5fce9a8b7914de8af0e3299ab08b650d1b7acad896c71"
