@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/quiz/page.jsx", "src/app/(content)/layout.jsx", "src/app/(content)/material/page.jsx", "src/app/(content)/layering/page.jsx", "src/app/(content)/clothing/page.jsx", "src/app/page.jsx", "src/app/layout.jsx", "src/components/Header/Triangle.jsx", "src/components/Header/Header.jsx"],
+  "exclude": ["node_modules"]
+}
