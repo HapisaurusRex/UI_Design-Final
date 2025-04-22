@@ -2,10 +2,7 @@
 Flask for UI Final
 """
 
-from flask import Flask
-from flask import render_template
-from flask import Response, request, jsonify
-from flask import redirect,url_for
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 
 app = Flask(__name__)
 
@@ -17,10 +14,12 @@ data = {
     }
 }
 
+# Global score variable
+score = None
+
 # ROUTES
 @app.route('/')
 def home():
-    # Home page
     return render_template('home.html')
 
 @app.route('/layer')
@@ -39,9 +38,24 @@ def clothing():
 def quiz():
     return render_template('quiz.html')
 
+@app.route('/submit_score', methods=['POST'])
+def submit_score():
+    global score
+    data = request.get_json()
+    score = data.get('score')
+    details = data.get('details')  # optional: detailed feedback/errors
+
+    print(f"Score received: {score}")
+    print(f"Details: {details}")
+
+    return jsonify({"message": "Score saved successfully!"})
+
+@app.route('/get_score', methods=['GET'])
+def get_score():
+    return jsonify({"score": score})
+
 @app.route('/view/<int:id>')
 def view(id):
-    # Get the data entry or return 404
     entry = data.get(id)
     if not entry:
         return "Item not found", 404

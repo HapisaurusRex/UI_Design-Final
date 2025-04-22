@@ -3,301 +3,300 @@
 {% block title %}Quiz - Drag to layer Scooter for the Weather{% endblock %}
 
 {% block content %}
-<div class="mb-4">
-  <h2 class="text-center fw-bold">Quiz - Drag to layer Scooter for the Weather</h2>
-</div>
-
-<!-- Score Section -->
-<div id="score-section" class="text-center mb-4" style="display:none;">
-  <h4 class="text-success">You scored <span id="score-count"></span>/6 correct!</h4>
-  <p class="text-muted">Correct answers:</p>
-  <ul id="correct-answers" class="list-unstyled small mx-auto" style="max-width:300px;"></ul>
-</div>
-
-<!-- Scenario 1: Cold, Windy with Light Snow -->
-<div class="row mb-5 border rounded p-3 shadow-sm" id="scenario-1">
-  <div class="col-md-4 position-relative" id="scooter-container-1">
-    <img src="{{ url_for('static', filename='Images/scooter.png') }}" alt="Scooter" class="img-fluid border rounded">
-    <div id="feedback-box-1" class="position-absolute bg-white p-2 border rounded small" style="top:10px; right:10px; display:none; width:180px;"></div>
+<div class="container">
+  <div class="mb-4">
+    <h2 class="text-center fw-bold">Quiz - Drag to layer Scooter for the Weather</h2>
   </div>
-  <div class="col-md-8">
-    <div class="mb-4"><h4 class="fw-semibold">Cold, Windy with Light Snow <small class="text-muted">(20–30°F / –6 to 1°C)</small></h4></div>
-    <!-- Base Layer -->
-    <div id="layer1-base" class="layer-section mb-4">
-      <h5>Base Layer:</h5>
-      <div class="d-flex gap-3">
-        <div class="option text-center">
-          <img src="{{ url_for('static', filename='Images/woolShirt.png') }}" class="material1 uniform-img img-thumbnail" data-name="Wool" draggable="true">
-          <p>Wool</p><span class="result-icon"></span>
-        </div>
-        <div class="option text-center">
-          <img src="{{ url_for('static', filename='Images/cottonShirt.png') }}" class="material1 uniform-img img-thumbnail" data-name="Cotton" draggable="true">
-          <p>Cotton</p><span class="result-icon"></span>
-        </div>
-        <div class="option text-center">
-          <img src="{{ url_for('static', filename='Images/syntheticShirt.png') }}" class="material1 uniform-img img-thumbnail" data-name="Synthetic" draggable="true">
-          <p>Synthetic</p><span class="result-icon"></span>
-        </div>
-      </div>
-    </div>
-    <!-- Mid Layer -->
-    <div id="layer1-mid" class="layer-section mb-4" style="display:none;">
-      <h5>Mid Layer:</h5>
-      <div class="d-flex gap-3">
-        <div class="option text-center">
-          <img src="{{ url_for('static', filename='Images/fleeceShirt.png') }}" class="material1 uniform-img img-thumbnail" data-name="Fleece" draggable="true">
-          <p>Fleece</p><span class="result-icon"></span>
-        </div>
-        <div class="option text-center">
-          <img src="{{ url_for('static', filename='Images/downShirt.png') }}" class="material1 uniform-img img-thumbnail" data-name="Down" draggable="true">
-          <p>Down</p><span class="result-icon"></span>
-        </div>
-        <div class="option text-center">
-          <img src="{{ url_for('static', filename='Images/woolShirt.png') }}" class="material1 uniform-img img-thumbnail" data-name="Wool" draggable="true">
-          <p>Wool</p><span class="result-icon"></span>
-        </div>
-      </div>
-    </div>
-    <!-- Outer Layer -->
-    <div id="layer1-outer" class="layer-section mb-4" style="display:none;">
-      <h5>Outer Layer:</h5>
-      <div class="d-flex gap-3">
-        <div class="option text-center">
-          <img src="{{ url_for('static', filename='Images/goretexShirt.png') }}" class="material1 uniform-img img-thumbnail" data-name="GoreTex" draggable="true">
-          <p>GoreTex</p><span class="result-icon"></span>
-        </div>
-        <div class="option text-center">
-          <img src="{{ url_for('static', filename='Images/downShirt.png') }}" class="material1 uniform-img img-thumbnail" data-name="Down" draggable="true">
-          <p>Down</p><span class="result-icon"></span>
-        </div>
-        <div class="option text-center">
-          <img src="{{ url_for('static', filename='Images/PolartecShirt.png') }}" class="material1 uniform-img img-thumbnail" data-name="Polartec" draggable="true">
-          <p>Polartec Power Shield</p><span class="result-icon"></span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<hr class="my-5">
-
-<!-- Scenario 2: Hot, Sunny, and Humid -->
-<div class="row mb-5 border rounded p-3 shadow-sm" id="scenario-2">
-  <div class="col-md-4 position-relative" id="scooter-container-2">
-    <img src="{{ url_for('static', filename='Images/scooter.png') }}" alt="Scooter" class="img-fluid border rounded">
-    <div id="feedback-box-2" class="position-absolute bg-white p-2 border rounded small" style="top:10px; right:10px; display:none; width:180px;"></div>
+  <!-- Score Section -->
+  <div id="score-section" class="text-center mb-4 p-3 bg-light rounded" style="display:none;">
+    <h4 class="text-success">You scored <span id="score-count"></span>/6 correct!</h4>
+    <p class="text-muted">Correct answers:</p>
+    <ul id="correct-answers" class="list-unstyled small mx-auto" style="max-width:400px;"></ul>
   </div>
-  <div class="col-md-8">
-    <div class="mb-4"><h4 class="fw-semibold">Hot, Sunny, and Humid <small class="text-muted">75°F to 95°F (24°C to 35°C)</small></h4></div>
-    <!-- Base Layer -->
-    <div id="layer2-base" class="layer-section mb-4">
-      <h5>Base Layer:</h5>
-      <div class="d-flex gap-3">
-        <div class="option text-center">
-          <img src="{{ url_for('static', filename='Images/syntheticShirt.png') }}" class="material2 uniform-img img-thumbnail" data-name="Synthetic" draggable="true">
-          <p>Dense Synthetic</p><span class="result-icon"></span>
-        </div>
-        <div class="option text-center">
-          <img src="{{ url_for('static', filename='Images/cottonShirt.png') }}" class="material2 uniform-img img-thumbnail" data-name="Cotton" draggable="true">
-          <p>Cotton</p><span class="result-icon"></span>
-        </div>
-        <div class="option text-center">
-          <img src="{{ url_for('static', filename='Images/woolShirt.png') }}" class="material2 uniform-img img-thumbnail" data-name="Wool" draggable="true">
-          <p>Wool</p><span class="result-icon"></span>
+
+  <!-- Scenario 1 -->
+  <div class="row mb-5 border rounded p-3 shadow-sm flex-column flex-md-row" id="scenario-1">
+    <!-- Scooter -->
+    <div class="col-12 col-md-4 mb-3 mb-md-0 position-relative" id="scooter-container-1" style="min-height: 300px;">
+      <img src="{{ url_for('static', filename='Images/scooter.png') }}" alt="Scooter" class="img-fluid border rounded position-relative">
+      <div id="feedback-box-1" class="position-absolute bg-white p-2 border rounded small" style="top:10px; right:10px; display:none; width:180px; z-index: 10;"></div>
+    </div>
+
+    <!-- Layer Options -->
+    <div class="col-12 col-md-8">
+      <div class="mb-4">
+        <h4 class="fw-semibold">Cold, Windy with Light Snow <small class="text-muted">(20–30°F / –6 to 1°C)</small></h4>
+      </div>
+
+      <!-- Base Layer -->
+      <div id="layer1-base" class="layer-section mb-4">
+        <h5>Base Layer:</h5>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+          {% for item in ['woolShirt', 'cottonShirt', 'syntheticShirt'] %}
+          <div class="option text-center position-relative">
+            <img src="{{ url_for('static', filename='Images/' + item + '.png') }}" 
+                 class="material1 uniform-img img-thumbnail" 
+                 data-name="{{ item.split('Shirt')[0].capitalize() }}" 
+                 draggable="true">
+            <p class="mt-2 mb-0">{{ item.split('Shirt')[0].capitalize() }}</p>
+            <span class="result-icon position-absolute"></span>
+          </div>
+          {% endfor %}
         </div>
       </div>
-    </div>
-    <!-- Mid Layer -->
-    <div id="layer2-mid" class="layer-section mb-4" style="display:none;">
-      <h5>Mid Layer:</h5>
-      <div class="d-flex gap-3">
-        <div class="option text-center">
-          <div class="no-need-box uniform-img border d-flex align-items-center justify-content-center bg-light" data-name="None" draggable="true"></div>
-          <p>No need!</p><span class="result-icon"></span>
-        </div>
-        <div class="option text-center">
-          <img src="{{ url_for('static', filename='Images/downShirt.png') }}" class="material2 uniform-img img-thumbnail" data-name="Down" draggable="true">
-          <p>Down</p><span class="result-icon"></span>
-        </div>
-        <div class="option text-center">
-          <img src="{{ url_for('static', filename='Images/woolShirt.png') }}" class="material2 uniform-img img-thumbnail" data-name="Wool" draggable="true">
-          <p>Wool</p><span class="result-icon"></span>
+
+      <!-- Mid Layer -->
+      <div id="layer1-mid" class="layer-section mb-4" style="display:none;">
+        <h5>Mid Layer:</h5>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+          {% for item in ['fleeceShirt', 'downShirt', 'woolShirt'] %}
+          <div class="option text-center position-relative">
+            <img src="{{ url_for('static', filename='Images/' + item + '.png') }}" 
+                 class="material1 uniform-img img-thumbnail" 
+                 data-name="{{ item.split('Shirt')[0].capitalize() }}" 
+                 draggable="true">
+            <p class="mt-2 mb-0">{{ item.split('Shirt')[0].capitalize() }}</p>
+            <span class="result-icon position-absolute"></span>
+          </div>
+          {% endfor %}
         </div>
       </div>
-    </div>
-    <!-- Outer Layer -->
-    <div id="layer2-outer" class="layer-section mb-4" style="display:none;">
-      <h5>Outer Layer:</h5>
-      <div class="d-flex gap-3">
-        <div class="option text-center">
-          <div class="windbreaker-box uniform-img border d-flex align-items-center justify-content-center bg-light" data-name="Ventilated" draggable="true"></div>
-          <p>Ventilated Windbreaker</p><span class="result-icon"></span>
-        </div>
-        <div class="option text-center">
-          <img src="{{ url_for('static', filename='Images/downShirt.png') }}" class="material2 uniform-img img-thumbnail" data-name="Down" draggable="true">
-          <p>Down</p><span class="result-icon"></span>
-        </div>
-        <div class="option text-center">
-          <img src="{{ url_for('static', filename='Images/PolartecShirt.png') }}" class="material2 uniform-img img-thumbnail" data-name="Polartec" draggable="true">
-          <p>Polartec Power Shield</p><span class="result-icon"></span>
+
+      <!-- Outer Layer -->
+      <div id="layer1-outer" class="layer-section mb-4" style="display:none;">
+        <h5>Outer Layer:</h5>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+          {% for item, label in [('goretexShirt', 'GoreTex'), ('downShirt', 'Down'), ('PolartecShirt', 'Polartec Power Shield')] %}
+          <div class="option text-center position-relative">
+            <img src="{{ url_for('static', filename='Images/' + item + '.png') }}" 
+                 class="material1 uniform-img img-thumbnail" 
+                 data-name="{{ label }}" 
+                 draggable="true">
+            <p class="mt-2 mb-0">{{ label }}</p>
+            <span class="result-icon position-absolute"></span>
+          </div>
+          {% endfor %}
         </div>
       </div>
     </div>
   </div>
+
+  <hr class="my-5">
+
+  <!-- Scenario 2 -->
+  <div class="row mb-5 border rounded p-3 shadow-sm flex-column flex-md-row" id="scenario-2">
+    <!-- Scooter -->
+    <div class="col-12 col-md-4 mb-3 mb-md-0 position-relative" id="scooter-container-2" style="min-height: 300px;">
+      <img src="{{ url_for('static', filename='Images/scooter.png') }}" alt="Scooter" class="img-fluid border rounded position-relative">
+      <div id="feedback-box-2" class="position-absolute bg-white p-2 border rounded small" style="top:10px; right:10px; display:none; width:180px; z-index: 10;"></div>
+    </div>
+
+    <!-- Layer Options -->
+    <div class="col-12 col-md-8">
+      <div class="mb-4">
+        <h4 class="fw-semibold">Hot, Sunny, and Humid <small class="text-muted">75°F to 95°F (24°C to 35°C)</small></h4>
+      </div>
+
+      <!-- Base Layer -->
+      <div id="layer2-base" class="layer-section mb-4">
+        <h5>Base Layer:</h5>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+          {% for item, label in [('syntheticShirt', 'Dense Synthetic'), ('cottonShirt', 'Cotton'), ('woolShirt', 'Wool')] %}
+          <div class="option text-center position-relative">
+            <img src="{{ url_for('static', filename='Images/' + item + '.png') }}" 
+                 class="material2 uniform-img img-thumbnail" 
+                 data-name="{{ label.split(' ')[0] }}" 
+                 draggable="true">
+            <p class="mt-2 mb-0">{{ label }}</p>
+            <span class="result-icon position-absolute"></span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Mid Layer -->
+      <div id="layer2-mid" class="layer-section mb-4" style="display:none;">
+        <h5>Mid Layer:</h5>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+          <div class="option text-center position-relative">
+            <div class="no-need-box uniform-img border rounded d-flex align-items-center justify-content-center bg-light" 
+                 data-name="None" 
+                 draggable="true">
+              <span class="text-muted">None</span>
+            </div>
+            <p class="mt-2 mb-0">No need!</p>
+            <span class="result-icon position-absolute"></span>
+          </div>
+          {% for item in ['downShirt', 'woolShirt'] %}
+          <div class="option text-center position-relative">
+            <img src="{{ url_for('static', filename='Images/' + item + '.png') }}" 
+                 class="material2 uniform-img img-thumbnail" 
+                 data-name="{{ item.split('Shirt')[0].capitalize() }}" 
+                 draggable="true">
+            <p class="mt-2 mb-0">{{ item.split('Shirt')[0].capitalize() }}</p>
+            <span class="result-icon position-absolute"></span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Outer Layer -->
+      <div id="layer2-outer" class="layer-section mb-4" style="display:none;">
+        <h5>Outer Layer:</h5>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+          <div class="option text-center position-relative">
+            <div class="windbreaker-box uniform-img border rounded d-flex align-items-center justify-content-center bg-light" 
+                 data-name="Ventilated" 
+                 draggable="true">
+              <span class="text-muted">Windbreaker</span>
+            </div>
+            <p class="mt-2 mb-0">Ventilated Windbreaker</p>
+            <span class="result-icon position-absolute"></span>
+          </div>
+          {% for item in ['downShirt', 'PolartecShirt'] %}
+          <div class="option text-center position-relative">
+            <img src="{{ url_for('static', filename='Images/' + item + '.png') }}" 
+                 class="material2 uniform-img img-thumbnail" 
+                 data-name="{{ item.split('Shirt')[0].capitalize() }}" 
+                 draggable="true">
+            <p class="mt-2 mb-0">{{ item.split('Shirt')[0].capitalize().replace('Polartec', 'Polartec Power Shield') }}</p>
+            <span class="result-icon position-absolute"></span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mb-4">
+    <button id="resetBtnGlobal" class="btn btn-outline-secondary">Reset Quiz</button>
+  </div>
 </div>
 
-<div class="text-center">
-  <button id="resetBtnGlobal" class="btn btn-outline-secondary">Reset Quiz</button>
-</div>
-
+<!-- Your existing HTML remains the same until the style section -->
 <style>
-.uniform-img { width: 80px; height: 80px; object-fit: contain; }
-.option     { position: relative; }
-.result-icon{ position: absolute; top: 0; right: 0; font-size: 1.5rem; }
-.no-need-box,
-.windbreaker-box { width: 80px; height: 80px; cursor: grab; }
+  /* Clothing items in selection area */
+  .uniform-img, .no-need-box, .windbreaker-box {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    cursor: grab;
+    transition: transform 0.2s;
+  }
+  
+  /* Dropped clothing items on scooter */
+  .dropped-item {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    pointer-events: none;
+  }
+  
+  .option {
+    position: relative;
+    width: 100px;
+  }
+  
+  .result-icon {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: white;
+    border: 1px solid #dee2e6;
+  }
+  
+  .result-icon.text-success {
+    color: #198754;
+    border-color: #198754;
+  }
+  
+  .result-icon.text-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+  }
+  
+  /* Only disable items that are already used in THIS layer */
+  .option.disabled-in-current-layer {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  
+  .option.disabled-in-current-layer [draggable] {
+    pointer-events: none;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .uniform-img, .no-need-box, .windbreaker-box, .dropped-item {
+      width: 60px;
+      height: 60px;
+    }
+    
+    .option {
+      width: 80px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .uniform-img, .no-need-box, .windbreaker-box, .dropped-item {
+      width: 50px;
+      height: 50px;
+    }
+    
+    .option {
+      width: 70px;
+    }
+    
+    .result-icon {
+      width: 20px;
+      height: 20px;
+      font-size: 0.8rem;
+    }
+  }
+
+
+/* Update dropped items for better layering */
+.dropped-item {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  pointer-events: none;
+  transition: all 0.2s ease; /* Smooth movement */
+  opacity: 1 !important;
+}
+
+/* Optional: Slight hover effect to see layered items better */
+#scooter-container-1:hover .dropped-item,
+#scooter-container-2:hover .dropped-item {
+  opacity: 1;
+}
+
+/* Optional: Give slight visual difference to layers */
+.dropped-item[data-layer="base"] {
+  filter: brightness(1);
+}
+.dropped-item[data-layer="mid"] {
+  filter: brightness(1.05);
+}
+.dropped-item[data-layer="outer"] {
+  filter: brightness(1.1);
+}
+
 </style>
+  
 {% endblock %}
 
 {% block scripts %}
-<script>
-// feedback and final score
-const expectedAll = {
-  '1': { base: 'Wool',      mid: 'Fleece',   outer: 'GoreTex'    },
-  '2': { base: 'Synthetic', mid: 'None',     outer: 'Ventilated' }
-};
-const feedbackAll = {
-  '1': {
-    base:  "Merino wool wicks moisture and regulates temperature.",
-    mid:   "Fleece is warm, breathable, and lightweight.",
-    outer: "Gore-Tex blocks wind and snow while breathing."
-  },
-  '2': {
-    base:  "Dense synthetics pull sweat off your skin, keeping you cool.",
-    mid:   "No mid-layer needed in hot, humid weather!",
-    outer: "Ventilated windbreakers keep rain out but let heat escape."
-  }
-};
-
-function handleQuiz(containerId, selectorList, expected, feedback, prefix, results) {
-  const layers = ['base','mid','outer'];
-  let current = 0;
-  const usedAnswers = new Set();
-
-  // dragstart → set data
-  document.querySelectorAll(selectorList).forEach(el => {
-    el.addEventListener('dragstart', e => {
-      if (el.getAttribute('draggable') === 'true') {
-        e.dataTransfer.setData('text/plain', el.dataset.name);
-      }
-    });
-  });
-
-  function updateDraggables() {
-    document.querySelectorAll(selectorList).forEach(el => {
-      const name    = el.dataset.name;
-      const layerId = `layer${prefix}-${layers[current]}`;
-      const inCurrent = el.closest('.layer-section')?.id === layerId;
-      if (!inCurrent || usedAnswers.has(name)) {
-        el.setAttribute('draggable', false);
-        el.style.opacity = '0.4'; el.style.cursor = 'not-allowed';
-      } else {
-        el.setAttribute('draggable', true);
-        el.style.opacity = '1';   el.style.cursor = 'grab';
-      }
-    });
-  }
-
-  updateDraggables();
-
-  const container = document.getElementById(containerId);
-  container.addEventListener('dragover', e => e.preventDefault());
-  container.addEventListener('drop', e => {
-    e.preventDefault();
-    const chosen = e.dataTransfer.getData('text/plain');
-    const layer  = layers[current];
-    const fb     = document.getElementById(`feedback-box-${prefix}`);
-    fb.style.display = 'block';
-
-    if (!results[prefix]) results[prefix] = {};
-    if (results[prefix][layer] !== undefined) return;
-
-    const isCorrect = chosen === expected[layer];
-    results[prefix][layer] = isCorrect;
-    usedAnswers.add(chosen);
-
-    fb.innerHTML = isCorrect
-      ? `<span class="text-success">✓</span> ${feedback[layer] || ''}`
-      : `<span class="text-danger">✗</span> Incorrect`;
-
-    // mark ✓/✗ icon
-    const optContainer = document.getElementById(`layer${prefix}-${layer}`);
-    optContainer.querySelectorAll('.option').forEach(opt => {
-      const img = opt.querySelector('[data-name]');
-      if (img?.dataset.name === chosen) {
-        const icon = opt.querySelector('.result-icon');
-        icon.innerText = isCorrect ? '✓' : '✗';
-        icon.classList.add(isCorrect ? 'text-success' : 'text-danger');
-      }
-    });
-
-    // next
-    current++;
-    if (current < layers.length) {
-      document.getElementById(`layer${prefix}-${layers[current]}`).style.display = 'block';
-    }
-    updateDraggables();
-
-    // final?
-    const done1 = Object.keys(results['1']||{}).length === 3;
-    const done2 = Object.keys(results['2']||{}).length === 3;
-    if (done1 && done2) showScore(results);
-  });
-}
-
-function showScore(results) {
-  const scoreSection = document.getElementById('score-section');
-  const scoreCount   = document.getElementById('score-count');
-  const answerList   = document.getElementById('correct-answers');
-  let score = 0;
-  answerList.innerHTML = '';
-
-  for (const q of ['1','2']) {
-    for (const layer of ['base','mid','outer']) {
-      if (results[q][layer]) {
-        score++;
-      } else {
-        const li = document.createElement('li');
-        li.innerHTML = `
-          <strong>Scenario ${q} – ${layer}:</strong> Correct answer was <strong>${expectedAll[q][layer]}</strong>.<br>
-          <small>${feedbackAll[q][layer]}</small>
-        `;
-        answerList.appendChild(li);
-      }
-    }
-  }
-
-  scoreCount.textContent = score;
-  scoreSection.style.display = 'block';
-}
-
-const results = {};
-handleQuiz(
-  'scooter-container-1',
-  '.material1',
-  { base: 'Wool', mid: 'Fleece', outer: 'GoreTex' },
-  feedbackAll['1'],
-  '1',
-  results
-);
-handleQuiz(
-  'scooter-container-2',
-  '.material2, .no-need-box, .windbreaker-box',
-  { base: 'Synthetic', mid: 'None', outer: 'Ventilated' },
-  feedbackAll['2'],
-  '2',
-  results
-);
-document.getElementById('resetBtnGlobal').onclick = () => location.reload();
-</script>
+<script src="{{ url_for('static', filename='quiz.js') }}"></script>
 {% endblock %}
