@@ -1,3 +1,355 @@
 {% extends "layout.html" %}
 {% block title %}Material{% endblock %}
-{% block content %}{% endblock %}
+
+{% block content %}
+<style>
+    .material-grid {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+    flex-wrap: nowrap; /* Don't wrap until media query kicks in */
+    }
+
+    .material-card {
+    flex: 0 1 auto;
+    width: 120px;
+    text-align: center;
+    cursor: pointer;
+    }
+
+    .material-card img {
+    width: 100%;
+    height: 120px; /* You can adjust this to whatever height you want */
+    object-fit: cover;
+    border-radius: 8px;
+    }
+
+    .material-card p {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    }
+
+    /* Switch to vertical layout when screen is too narrow */
+    @media (max-width: 650px) {
+    .material-grid {
+    flex-direction: column;
+    align-items: center;
+    }
+
+    .material-card {
+    width: 80%;
+    max-width: 300px;
+    }
+    }
+
+    .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    }
+
+    .modal-content {
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    width: 80%;  /* Increased from fixed 400px to percentage */
+    max-width: 800px;  /* New max-width */
+    height: 80vh;  /* Fixed height */
+    max-height: 800px;  /* New max-height */
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    }
+    .close-button {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+    }
+
+    .modal-content h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    }
+
+    .modal-content p {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.4;
+    }
+
+    #materialSimulation{
+    width: 100%; 
+    height: 300px;
+    }
+    #materialSimulation canvas {
+    max-width: 100%;
+    height: auto;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script> 
+
+<div class="material-grid" id="materialContainer">
+  <!-- Cards will be injected here -->
+</div>
+<!-- Modal -->
+<div class="modal" id="materialModal">
+  <div class="modal-content">
+    <button class="close-button" id="closeModal">&times;</button>
+    <h2 id="modalTitle">Material Name</h2>
+    <p id="modalDescription">Material description goes here...</p>
+    <div id="materialSimulation"></div>
+  </div>
+</div>
+
+<script>
+    let game = null;
+    class MaterialTestScene extends Phaser.Scene {
+        constructor() {
+            super({ key: 'MaterialTestScene' });
+            this.material = null;
+            this.temperature = 20;
+            this.humidity = 50;
+            this.wind = 5;
+            this.sliders={};
+        }
+
+        preload() {
+            this.load.image('dummy', '../static/Images/Materials/dummy.png');
+        }
+
+        create(data) {
+            this.material = data.material;
+            // Clear previous scene if it exists
+            this.children.each(child => child.destroy());
+            // Display dynamic facts
+            this.factsText = this.add.text(20,200, "placeholder", { fontSize: '24px', fill: '#fff' });
+
+            // Add dummy or character image
+            this.dummy = this.add.sprite(150, 350, 'dummy');
+            this.dummy.setOrigin(0.2, 0.2);
+
+            // Create sliders
+            this.createSlider(250, 50, 250, 50, 'temperature', this.temperature);
+            this.createSlider(250, 100, 250, 50, 'humidity', this.humidity);
+            this.createSlider(250, 150, 250, 50, 'wind', this.wind);
+
+            // Initialize simulation
+            this.updateSimulation();
+        }
+
+        createSlider(x, y, width, height, name, initialValue) {
+            let label = this.add.text(20, y-10, name, { fontSize: '24px', color: '#ffffff' });
+            const bg = this.add.rectangle(x, y, width, 20, 0xaaaaaa)
+                .setOrigin(0, 0.5);
+            
+            // Thumb
+            const thumb = this.add.circle(x + (initialValue / 100 * width), y, 10, 0x0000ff)
+                .setInteractive();
+            
+            // Store reference
+            this.sliders[name] = { bg, thumb, width };
+            
+            // Drag handling
+            this.input.setDraggable(thumb);
+            
+            thumb.on('drag', (pointer, dragX, dragY) => {
+                // Constrain to slider width
+                const newX = Phaser.Math.Clamp(dragX, x, x + width);
+                thumb.setPosition(newX, y);
+                
+                // Update value (0-100)
+                this[name] = ((newX - x) / width) * 100;
+                this.updateSimulation();
+            });
+        }
+
+        updateSimulation() {
+            // Apply environment conditions (temperature, humidity, wind) to the material's properties
+            const baseScale = 1;
+            this.dummy.setScale(1,baseScale - (this.material.properties.shrink * (this.temperature - 30)/70));
+        
+            this.factsText.setText("This is where dynamic facts are placed");
+        }
+    }
+
+    function initMaterialSimulation(material) {
+        // Destroy previous game if exists
+        if (game) {
+            game.destroy(true);
+        }
+        
+        game = new Phaser.Game({
+            type: Phaser.AUTO,
+            scene: MaterialTestScene,
+            parent: "materialSimulation",
+            scale: {
+            mode: Phaser.Scale.FIT,
+            autoCenter: Phaser.Scale.CENTER_BOTH,
+            width: 800,
+            height: 600
+            },
+            input: {
+            activePointers: 3
+            }
+            });
+        
+        // Start scene with the selected material
+        game.scene.start('MaterialTestScene', { material });
+    }
+    const materials = [
+        {
+            name: "Wool",
+            image: "Materials/wool.jpg",
+            description: "Wool is a natural fiber made from animal hair.",
+            properties: {
+            shrink: 0.1,   
+            soak: 0.2,     
+            insulation: 0.9
+            },
+            facts: [
+            "Wool keeps warmth even when wet.",
+            "Wool is odor resistant.",
+            "Wool is not strong.",
+            "Wool great for cold weather.",
+            "Wool great for wet weather."
+            ]
+        },
+        {
+            name: "Cotton",
+            image: "Materials/cotton.jpg",
+            description: "Cotton is a natural fiber made from the Gossypium plant.",
+            properties: {
+            shrink: 0.2,
+            soak: 0.5,  
+            insulation: 0.3 
+            },
+            facts: [
+            "Cotton doesn't keep you warm when wet.",
+            "Cotton is comfortable and low maintenance.",
+            "Cotton doesn't keep you warm when wet."
+            ]
+        },
+        {
+            name: "Fleece",
+            image: "Materials/fleece.jpg",
+            description: "Fleece is a synthetic fiber that looks like fur.",
+            properties: {
+            shrink: 0.2,
+            soak: 0.5,  
+            insulation: 0.3 
+            },
+            facts: [
+            "Fleece is lighter than wool.",
+            "Fleece is warm.",
+            "Fleece is not ddurable.",
+            "Fleece is high maintenance.",
+            "Fleece is not good when wet.",
+            "Fleece is good for cold weather.",
+            "Fleece is good for windy weather."
+            ]
+        },
+        {
+            name: "Down",
+            image: "Materials/down.jpg",
+            description: "Down is a natural fiber made from bird feathers.",
+            properties: {
+            shrink: 0.2,
+            soak: 0.5,  
+            insulation: 0.3 
+            },
+            facts: [
+            "Down is light and warm.",
+            "Down needs to be containedd by other materials.",
+            "Down is good for cold weather."
+            ]
+        },
+        {
+            name: "Synthetic",
+            image: "Materials/synthetic.jpg",
+            description: "Synthetics are man made fibers from chemicals (usually oil).",
+            properties: {
+            shrink: 0.2,
+            soak: 0.5,  
+            insulation: 0.3
+            },
+            facts: [
+            "Synthetics are rip resistant.",
+            "Synthetics are affordable.",
+            "Synthetics are not very breathable and are prone to smells.",
+            "Synthetics are a greate material for down jackets.",
+            "Synthetics are waterproof."
+            ]
+        }
+    ];
+
+    const container = document.getElementById("materialContainer");
+    const modal = document.getElementById("materialModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDesc = document.getElementById("modalDescription");
+    const closeModal = document.getElementById("closeModal");
+    modal.style.display = "none"; 
+
+    materials.forEach(mat => {
+        const card = document.createElement("div");
+        card.className = "material-card";
+        card.innerHTML = `
+            <img src="/static/images/${mat.image}" alt="${mat.name}" />
+            <p>${mat.name}</p>
+        `;
+        card.onclick = () => {
+            modalTitle.textContent = mat.name;
+            modalDesc.textContent = mat.description;
+            // Create unordered list of facts
+        const ul = document.createElement("ul");
+        mat.facts.forEach(fact => {
+            const li = document.createElement("li");
+            li.textContent = fact;
+            ul.appendChild(li);
+        });
+
+        // Append the list after the description
+        modalDesc.appendChild(ul);
+
+        modal.style.display = "flex";
+        initMaterialSimulation(mat); 
+        };
+        container.appendChild(card);
+    });
+
+    closeModal.onclick = () => {
+    modal.style.display = "none";
+        if (game) {
+            game.destroy(true);
+            game = null;
+        }
+    };
+
+    window.onclick = (e) => {
+    if (e.target === modal) {
+        modal.style.display = "none";
+        if (game) {
+                game.destroy(true);
+                game = null;
+        }
+    }
+    };
+</script>
+{% endblock %}

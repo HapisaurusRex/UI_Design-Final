@@ -3,7 +3,7 @@ Flask for UI Final
 """
 
 from flask import Flask, render_template, request, jsonify, redirect, url_for
-
+from datetime import datetime
 app = Flask(__name__)
 
 # Sample data (for existing item view)
@@ -14,24 +14,40 @@ data = {
     }
 }
 
+visit_log = {
+    "home": None,
+    "layer": None,
+    "material": None,
+    "clothing": None
+}
+
 # Global score variable
 score = None
+
+# Helper function to record page visits
+def log_visit(page_name):
+    now = datetime.now().isoformat()
+    visit_log[page_name] = now
 
 # ROUTES
 @app.route('/')
 def home():
+    log_visit('home')
     return render_template('home.html')
 
 @app.route('/layer')
 def layer():
+    log_visit('layer')
     return render_template('layer.html')
 
 @app.route('/material')
 def weather():
+    log_visit('material')
     return render_template('material.html')
 
 @app.route('/clothing')
 def clothing():
+    log_visit('clothing')
     return render_template('clothing.html')
 
 @app.route('/quiz')
@@ -53,6 +69,10 @@ def submit_score():
 @app.route('/get_score', methods=['GET'])
 def get_score():
     return jsonify({"score": score})
+
+@app.route('/visits')
+def show_visits():
+    return jsonify(visit_log)
 
 @app.route('/view/<int:id>')
 def view(id):
