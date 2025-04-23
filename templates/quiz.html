@@ -165,18 +165,18 @@
       </div>
 
       <!-- Outer Layer -->
-      <div id="layer2-outer" class="layer-section mb-4" style="display:none;">
-        <h5>Outer Layer:</h5>
-        <div class="d-flex flex-wrap justify-content-center gap-3">
-          <div class="option text-center position-relative">
-            <div class="windbreaker-box uniform-img border rounded d-flex align-items-center justify-content-center bg-light"
-                 data-name="Ventilated"
-                 draggable="true">
-              <span class="text-muted">Windbreaker</span>
-            </div>
-            <p class="mt-2 mb-0">Ventilated Windbreaker</p>
-            <span class="result-icon position-absolute"></span>
-          </div>
+		<div id="layer2-outer" class="layer-section mb-4" style="display:none;">
+		  <h5>Outer Layer:</h5>
+		  <div class="d-flex flex-wrap justify-content-center gap-3">
+			<div class="option text-center position-relative">
+			  <img src="{{ url_for('static', filename='Images/windbreaker.png') }}"
+				   class="material2 uniform-img img-thumbnail"
+				   data-name="Ventilated"
+				   draggable="true">
+			  <p class="mt-2 mb-0">Ventilated Windbreaker</p>
+			  <span class="result-icon position-absolute"></span>
+			</div>
+			
           {% for item in ['downShirt','PolartecShirt'] %}
           <div class="option text-center position-relative">
             <img src="{{ url_for('static', filename='Images/' + item + '.png') }}"

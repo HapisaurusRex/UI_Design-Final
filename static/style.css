@@ -141,3 +141,11 @@
 .dropped-item[data-layer="outer"] {
   filter: brightness(1.1);
 }
+
+/* Remove background from images when overlaid on scooter */
+.dropped-item {
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+

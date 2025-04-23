@@ -200,4 +200,3 @@ const expectedAll = {
     results
   );
   document.getElementById('resetBtnGlobal').onclick = () => location.reload();
-  
