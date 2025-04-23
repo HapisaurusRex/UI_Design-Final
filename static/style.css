@@ -1,24 +1,16 @@
-/* style.css */
-
-/* --- Moved from quiz.html inline styles --- */
-
-/* Score section hidden by default */
 #score-section {
   display: none;
 }
 
-/* Max width for answer list */
 #correct-answers {
   max-width: 400px;
 }
 
-/* Keep scooter containers tall */
 #scooter-container-1,
 #scooter-container-2 {
   min-height: 300px;
 }
 
-/* Feedback pop‑up boxes */
 #feedback-box-1,
 #feedback-box-2 {
   position: absolute;
@@ -28,8 +20,6 @@
   z-index: 10;
   display: none;
 }
-
-/* --- Your existing styles below --- */
 
 .uniform-img,
 .no-need-box,
@@ -41,7 +31,6 @@
   transition: transform 0.2s;
 }
 
-/* Dropped clothing items on scooter */
 .dropped-item {
   position: absolute;
   width: 80px;
@@ -50,6 +39,9 @@
   pointer-events: none;
   transition: all 0.2s ease;
   opacity: 1 !important;
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 .option {
@@ -72,28 +64,23 @@
   background-color: white;
   border: 1px solid #dee2e6;
 }
-
 .result-icon.text-success {
   color: #198754;
   border-color: #198754;
 }
-
 .result-icon.text-danger {
   color: #dc3545;
   border-color: #dc3545;
 }
 
-/* Disable items already used in current layer */
 .option.disabled-in-current-layer {
   opacity: 0.4;
   cursor: not-allowed;
 }
-
 .option.disabled-in-current-layer [draggable] {
   pointer-events: none;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .uniform-img,
   .no-need-box,
@@ -102,9 +89,7 @@
     width: 60px;
     height: 60px;
   }
-  .option {
-    width: 80px;
-  }
+  .option { width: 80px; }
 }
 
 @media (max-width: 576px) {
@@ -115,9 +100,7 @@
     width: 50px;
     height: 50px;
   }
-  .option {
-    width: 70px;
-  }
+  .option { width: 70px; }
   .result-icon {
     width: 20px;
     height: 20px;
@@ -125,27 +108,40 @@
   }
 }
 
-/* Hover to reveal dropped items */
 #scooter-container-1:hover .dropped-item,
 #scooter-container-2:hover .dropped-item {
   opacity: 1;
 }
 
-/* Distinguish layers by brightness */
-.dropped-item[data-layer="base"] {
-  filter: brightness(1);
-}
-.dropped-item[data-layer="mid"] {
-  filter: brightness(1.05);
-}
-.dropped-item[data-layer="outer"] {
-  filter: brightness(1.1);
+.dropped-item[data-layer="base"]  { filter: brightness(1); }
+.dropped-item[data-layer="mid"]   { filter: brightness(1.05); }
+.dropped-item[data-layer="outer"] { filter: brightness(1.1); }
+
+.triangle-container {
+  max-width: 500px;
+  margin: 0 auto;
 }
 
-/* Remove background from images when overlaid on scooter */
-.dropped-item {
-  background: none !important;
-  box-shadow: none !important;
-  border: none !important;
+.triangle-svg {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
+.triangle-svg line,
+.triangle-svg > polygon {
+  stroke: black !important;
+  stroke-width: 2px !important;
+  fill: none;
+}
+
+.triangle-btn {
+  fill: white !important;
+  stroke: black !important;
+  stroke-width: 2px !important;
+  cursor: pointer;
+  transition: fill 0.3s ease;
+}
+.triangle-btn:hover {
+  fill: #e0f7fa !important;
+}
