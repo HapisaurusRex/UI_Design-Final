@@ -3,6 +3,40 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<style>
+  /* ── Triangle Nav Styles ── */
+
+.triangle-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.triangle-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* All edges (outer polygon + lines) */
+.triangle-svg line,
+.triangle-svg > polygon {
+  stroke: black !important;
+  stroke-width: 2px !important;
+  fill: none;
+}
+
+/* Clickable wedges */
+.triangle-btn {
+  fill: white !important;
+  stroke: black !important;
+  stroke-width: 2px !important;
+  cursor: pointer;
+  transition: fill 0.3s ease;
+}
+.triangle-btn:hover {
+  fill: #e0f7fa !important;
+}
+</style>
   <h1 class="text-center fw-bold mb-4">The 3 keys to dressing for the weather</h1>
 
   <div class="triangle-container">

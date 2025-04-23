@@ -1,3 +1,27 @@
+/* Attempt at combining all styles */
+/* From layer section */
+body{
+  font-size: 2rem;
+}
+.topic-title{
+  font-weight: bold;
+  font-size: 3rem;
+}
+.highlight{
+  font-weight: bold;
+  font-size: 2.5rem;
+}
+.concept{
+  margin: 4rem 0;
+}
+
+.layer-img{
+  min-height: 200px ;
+  max-height: 500px;
+  width: auto;
+  border-radius: 2rem;
+}
+
 /* ── Quiz Styles ── */
 
 /* Hide score until quiz completion */
@@ -131,36 +155,3 @@
 .dropped-item[data-layer="mid"]   { filter: brightness(1.05); }
 .dropped-item[data-layer="outer"] { filter: brightness(1.1); }
 
-
-/* ── Triangle Nav Styles ── */
-
-.triangle-container {
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.triangle-svg {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* All edges (outer polygon + lines) */
-.triangle-svg line,
-.triangle-svg > polygon {
-  stroke: black !important;
-  stroke-width: 2px !important;
-  fill: none;
-}
-
-/* Clickable wedges */
-.triangle-btn {
-  fill: white !important;
-  stroke: black !important;
-  stroke-width: 2px !important;
-  cursor: pointer;
-  transition: fill 0.3s ease;
-}
-.triangle-btn:hover {
-  fill: #e0f7fa !important;
-}
