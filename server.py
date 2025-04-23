@@ -48,7 +48,7 @@ def weather():
 @app.route('/clothing')
 def clothing():
     log_visit('clothing')
-    return render_template('clothing.html')
+    return render_template('weather.html')
 
 @app.route('/quiz')
 def quiz():

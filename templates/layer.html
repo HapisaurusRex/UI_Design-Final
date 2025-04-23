@@ -1,3 +1,171 @@
 {% extends "layout.html" %}
-{% block title %}Layer{% endblock %}
-{% block content %}{% endblock %}
+
+{% block content %}
+<!-- To unify into CSS file later.  -->
+<style>
+    body{
+    font-size: 2rem;
+}
+.topic-title{
+    font-weight: bold;
+    font-size: 3rem;
+}
+.highlight{
+    font-weight: bold;
+    font-size: 2rem;
+}
+.concept{
+    margin: 50px 0;
+}
+
+.layer-img{
+    height: 200px;
+    width: auto;
+}
+
+/* To sort out later */
+
+.layer-stack {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    margin-top: 1rem;
+  }
+
+/* SEE SAW */
+
+.layer-box {
+    background-color: #a4c8ff;
+    padding: 10px 20px;
+    margin: 5px 0;
+    border-radius: 10px;
+    border: 1px solid #333;
+    font-weight: bold;
+    width: 180px;
+    text-align: center;
+  }
+  
+  #seesaw-scene {
+    margin-top: 2rem;
+    position: relative;
+    height: 300px;
+  }
+  
+  .seesaw {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-10deg);
+    width: 600px;
+    height: 10px;
+    background: #111;
+    z-index: 0;
+  }
+  
+  .triangle {
+    position: absolute;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-top: 50px solid #a4c8ff;
+    z-index: 1;
+  }
+  
+  .left-stack, .right-stack {
+    z-index: 2;
+  }
+  
+</style>
+<div>
+    <span class="topic-title">Layering</span> is when you wear multiple types of materials to keep you comfortable in multiple weather conditions. A layer can be anything, but they generally fit into 3 categories:
+</div>
+
+<div class="concept">
+    <div>
+        <span class="highlight"> Base layers</span> let you sweat and are comfy to wear.
+    </div>
+    <div class="container">
+        <div class="row" id="base-layer-images">
+        </div>
+    </div>
+</div>
+<div class="concept">
+    <div>
+        <span class="highlight"> Mid layers</span> keep you warm when needed
+    </div>
+    <div class="container">
+        <div class="row" id="mid-layer-images">
+        </div>
+    </div>
+</div>
+<div class="concept">
+    <div>
+        <span class="highlight"> Outer layers</span> protect you (and other layers) from rain, wind, and snow
+    </div>
+    <div class="container">
+        <div class="row" id="outer-layer-images">
+        </div>
+    </div>
+</div>
+
+<div class="concept mt-5">
+    <div class="text-center mb-3">
+      <strong>There are 2 schools of thought for layering:</strong>
+    </div>
+    <div class="row justify-content-center align-items-start">
+      <!-- 2 Layers (Hot) -->
+      <div class="col-md-5 text-center">
+        <p><strong>Use 2 layers for hot weather</strong></p>
+        <div class="layer-stack">
+          <div class="layer-box">Outer layer</div>
+          <div class="layer-box">Base layer</div>
+        </div>
+      </div>
+  
+      <!-- 3 Layers (Cold) -->
+      <div class="col-md-5 text-center">
+        <p><strong>Use 3 layers for cold weather</strong></p>
+        <div class="layer-stack">
+          <div class="layer-box">Outer layer</div>
+          <div class="layer-box">Mid layer</div>
+          <div class="layer-box">Base layer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="concept text-center">
+    <p>You can always <strong>wear more</strong>, but remember you will <strong>weigh more</strong>.</p>
+  
+    <div class="row justify-content-center align-items-end position-relative" id="seesaw-scene">
+      <!-- Left Stack -->
+      <div class="col-md-4 d-flex flex-column align-items-center left-stack">
+        <div class="layer-box">Outer layer</div>
+        <div class="layer-box">Mid layer</div>
+        <div class="layer-box">Base layer</div>
+      </div>
+  
+      <!-- Right Stack -->
+      <div class="col-md-4 d-flex flex-column align-items-center right-stack">
+        <div class="layer-box">Outer layer</div>
+        <div class="layer-box">Mid layer</div>
+        <div class="layer-box">Mid layer</div>
+        <div class="layer-box">Base layer</div>
+      </div>
+  
+      <!-- Seesaw -->
+      <div class="seesaw"></div>
+      <div class="triangle"></div>
+    </div>
+  </div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='layering.js') }}"></script>
+{% endblock %}
