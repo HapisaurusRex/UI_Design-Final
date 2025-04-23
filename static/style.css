@@ -1,16 +1,22 @@
+/* ── Quiz Styles ── */
+
+/* Hide score until quiz completion */
 #score-section {
   display: none;
 }
 
+/* Limit width of the “correct answers” list */
 #correct-answers {
   max-width: 400px;
 }
 
+/* Ensure scooter area stays tall enough */
 #scooter-container-1,
 #scooter-container-2 {
   min-height: 300px;
 }
 
+/* Feedback pop-ups */
 #feedback-box-1,
 #feedback-box-2 {
   position: absolute;
@@ -21,6 +27,7 @@
   display: none;
 }
 
+/* Draggable icons */
 .uniform-img,
 .no-need-box,
 .windbreaker-box {
@@ -31,6 +38,7 @@
   transition: transform 0.2s;
 }
 
+/* When items land on the scooter */
 .dropped-item {
   position: absolute;
   width: 80px;
@@ -44,11 +52,13 @@
   border: none !important;
 }
 
+/* Each option wrapper */
 .option {
   position: relative;
   width: 100px;
 }
 
+/* ✓/✗ icons */
 .result-icon {
   position: absolute;
   top: -10px;
@@ -73,6 +83,7 @@
   border-color: #dc3545;
 }
 
+/* Disable used items in the current layer */
 .option.disabled-in-current-layer {
   opacity: 0.4;
   cursor: not-allowed;
@@ -81,6 +92,7 @@
   pointer-events: none;
 }
 
+/* Responsive resizing */
 @media (max-width: 768px) {
   .uniform-img,
   .no-need-box,
@@ -108,14 +120,19 @@
   }
 }
 
+/* Hover reveals dropped items */
 #scooter-container-1:hover .dropped-item,
 #scooter-container-2:hover .dropped-item {
   opacity: 1;
 }
 
+/* Slight brightness difference by layer */
 .dropped-item[data-layer="base"]  { filter: brightness(1); }
 .dropped-item[data-layer="mid"]   { filter: brightness(1.05); }
 .dropped-item[data-layer="outer"] { filter: brightness(1.1); }
+
+
+/* ── Triangle Nav Styles ── */
 
 .triangle-container {
   max-width: 500px;
@@ -128,6 +145,7 @@
   display: block;
 }
 
+/* All edges (outer polygon + lines) */
 .triangle-svg line,
 .triangle-svg > polygon {
   stroke: black !important;
@@ -135,6 +153,7 @@
   fill: none;
 }
 
+/* Clickable wedges */
 .triangle-btn {
   fill: white !important;
   stroke: black !important;
