@@ -21,15 +21,53 @@ visit_log = {
     "clothing": None
 }
 
+quiz_media = {
+    "questions": [
+        {
+            "base": [
+                {"name": "Wool",      "img": "Images/woolShirt.png"},
+                {"name": "Cotton",    "img": "Images/cottonShirt.png"},
+                {"name": "Synthetic", "img": "Images/syntheticShirt.png"}
+            ],
+            "mid": [
+                {"name": "Fleece",    "img": "Images/fleeceShirt.png"},
+                {"name": "Down",      "img": "Images/downShirt.png"},
+                {"name": "Wool",      "img": "Images/woolShirt.png"}
+            ],
+            "outer": [
+                {"name": "GoreTex",                "img": "Images/goretexShirt.png"},
+                {"name": "Down",                   "img": "Images/downShirt.png"},
+                {"name": "Polartec Power Shield",  "img": "Images/PolartecShirt.png"}
+            ]
+        },
+        {
+            "base": [
+                {"name": "Dense Synthetic", "img": "Images/syntheticShirt.png"},
+                {"name": "Cotton",          "img": "Images/cottonShirt.png"},
+                {"name": "Wool",            "img": "Images/woolShirt.png"}
+            ],
+            "mid": [
+                {"name": "No need!"},
+                {"name": "Down",        "img": "Images/downShirt.png"},
+                {"name": "Wool",        "img": "Images/woolShirt.png"}
+            ],
+            "outer": [
+                {"name": "Ventilated Windbreaker", "img": "Images/windbreaker.png"},
+                {"name": "Down",                   "img": "Images/downShirt.png"},
+                {"name": "Polartec Power Shield",  "img": "Images/PolartecShirt.png"}
+            ]
+        }
+    ]
+}
+
 # Global score variable
 score = None
 
-# Helper function to record page visits
+# Helper for page visits (if you need it)
+visit_log = {"home": None, "layer": None, "material": None, "clothing": None}
 def log_visit(page_name):
-    now = datetime.now().isoformat()
-    visit_log[page_name] = now
+    visit_log[page_name] = datetime.now().isoformat()
 
-# ROUTES
 @app.route('/')
 def home():
     log_visit('home')
@@ -41,7 +79,7 @@ def layer():
     return render_template('layer.html')
 
 @app.route('/material')
-def weather():
+def material():
     log_visit('material')
     return render_template('material.html')
 
@@ -52,18 +90,17 @@ def clothing():
 
 @app.route('/quiz')
 def quiz():
-    return render_template('quiz.html')
+    # now passes quiz_media into the template
+    return render_template('quiz.html', quiz_media=quiz_media)
 
 @app.route('/submit_score', methods=['POST'])
 def submit_score():
     global score
     data = request.get_json()
     score = data.get('score')
-    details = data.get('details')  # optional: detailed feedback/errors
-
+    details = data.get('details')
     print(f"Score received: {score}")
     print(f"Details: {details}")
-
     return jsonify({"message": "Score saved successfully!"})
 
 @app.route('/get_score', methods=['GET'])
@@ -73,13 +110,6 @@ def get_score():
 @app.route('/visits')
 def show_visits():
     return jsonify(visit_log)
-
-@app.route('/view/<int:id>')
-def view(id):
-    entry = data.get(id)
-    if not entry:
-        return "Item not found", 404
-    return render_template('item.html', data=entry, all_data=data)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
