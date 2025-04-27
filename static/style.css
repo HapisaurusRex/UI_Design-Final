@@ -31,8 +31,8 @@ body{
 
 /* Add positioning context to scenario containers */
 #scenario-1, #scenario-2 {
-  position: relative !important;
-  min-height: 450px; /* Ensure enough height for the background to be visible */
+  position: relative;
+  height: 900px; 
   overflow: hidden; /* Keep the background contained */
 }
 
@@ -211,9 +211,4 @@ body{
 #scooter-container-2:hover .dropped-item {
   opacity: 1;
 }
-
-/* Slight brightness difference by layer */
-.dropped-item[data-layer="base"]  { filter: brightness(1); }
-.dropped-item[data-layer="mid"]   { filter: brightness(1.05); }
-.dropped-item[data-layer="outer"] { filter: brightness(1.1); }
 

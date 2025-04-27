@@ -87,9 +87,9 @@ function handleQuiz(containerId, selectorList, expected, feedback, prefix, resul
         newImg.setAttribute('data-layer', layer);
         newImg.setAttribute('draggable', false);
         newImg.style.position = 'absolute';
-        newImg.style.width    = '160px';
-        newImg.style.height   = '160px';
-        newImg.style.top      = '25%';
+        newImg.style.width    = '170px';
+        newImg.style.height   = 'auto';
+        newImg.style.top      = '12%';
         newImg.style.left     = '10%';
         newImg.style.zIndex   = layer==='base'?1: layer==='mid'?2:3;
         scooter.appendChild(newImg);
