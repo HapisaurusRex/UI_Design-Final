@@ -1,7 +1,7 @@
 /* Attempt at combining all styles */
 /* From layer section */
 body{
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 .topic-title{
   font-weight: bold;
@@ -114,6 +114,19 @@ body{
 }
 .option.disabled-in-current-layer [draggable] {
   pointer-events: none;
+}
+
+.navbar .navbar-brand {
+  height: 56px;         /* Lock to Bootstrap’s default navbar height */
+  display: flex;
+  align-items: center;  /* Vertically center the icon */
+}
+
+/* ── your new home icon ── */
+.nav-home-icon {
+  width: 48px;          /* Visible size – tweak as you like */
+  height: 48px;
+  object-fit: contain;  /* ensure the PNG fills the box correctly */
 }
 
 /* Responsive resizing */

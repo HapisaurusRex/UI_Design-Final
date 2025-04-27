@@ -83,9 +83,9 @@ def material():
     log_visit('material')
     return render_template('material.html')
 
-@app.route('/clothing')
+@app.route('/weather')
 def clothing():
-    log_visit('clothing')
+    log_visit('weather')
     return render_template('weather.html')
 
 @app.route('/quiz')
