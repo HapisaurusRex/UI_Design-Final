@@ -27,7 +27,7 @@
   <!-- existing quiz markup unchanged -->
   {% for q in quiz_media.questions %}
     {% set idx = loop.index %}
-    <div class="row mb-5 border rounded p-3 shadow-sm flex-column flex-md-row"
+    <div class="row mb-5 flex-column flex-md-row"
          id="scenario-{{ idx }}">
 
       <div class="quiz-background-container">
@@ -38,9 +38,9 @@
 
       <div class="col-12 col-md-4 mb-3 mb-md-0 position-relative"
            id="scooter-container-{{ idx }}">
-        <img src="{{ url_for('static', filename='Images/scooter.png') }}"
+        <img src="{{ url_for('static', filename=q.scooter) }}"
              alt="Scooter"
-             class="img-fluid border rounded position-relative"
+             class="img-fluid position-relative"
              draggable="false">
         <div id="feedback-box-{{ idx }}"
              class="position-absolute bg-white p-2 border rounded small"
@@ -49,12 +49,12 @@
       <div class="col-12 col-md-8">
         <div class="mb-4">
           {% if idx == 1 %}
-            <h4 class="fw-semibold">
+            <h4 class="fw-semibold" id="weatherDescription">
               Cold, Windy with Light Snow 
               <small class="text-muted">(20–30°F / –6 to 1°C)</small>
             </h4>
           {% else %}
-            <h4 class="fw-semibold">
+            <h4 class="fw-semibold" id="weatherDescription">
               Hot, Sunny, and Humid 
               <small class="text-muted">(75–95°F / 24–35°C)</small>
             </h4>

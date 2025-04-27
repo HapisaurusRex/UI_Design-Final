@@ -18,5 +18,8 @@
 .triangle-btn:hover {
   fill: #f0f0f0;
 }
+#weatherDescription {
+  padding-top: 100px !important;
+}
 
 

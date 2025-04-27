@@ -30,7 +30,7 @@ quiz_media = {
     "questions": [
         {
             "background": "Images/Background1.png",
-
+            "scooter": "Images/scooter.png",
             "base": [
                 {"name": "Wool",      "img": "Images/woolShirt.png"},
                 {"name": "Cotton",    "img": "Images/cottonShirt.png"},
@@ -49,6 +49,7 @@ quiz_media = {
         },
         {
             "background": "Images/Background2.png",
+            "scooter": "Images/scooter.png",
             "base": [
                 {"name": "Dense Synthetic", "img": "Images/syntheticShirt.png"},
                 {"name": "Cotton",          "img": "Images/cottonShirt.png"},
