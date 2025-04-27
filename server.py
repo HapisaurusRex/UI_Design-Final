@@ -2,9 +2,14 @@
 Flask for UI Final
 """
 
-from flask import Flask, render_template, request, jsonify, redirect, url_for
-from datetime import datetime
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session
+from flask_session import Session
+from datetime import datetime, timedelta
+
 app = Flask(__name__)
+app.secret_key = 'scooter'  # still needed for CSRF protection
+
+quiz_scores = {}
 
 # Sample data (for existing item view)
 data = {
@@ -60,8 +65,6 @@ quiz_media = {
     ]
 }
 
-# Global score variable
-score = None
 
 # Helper for page visits (if you need it)
 visit_log = {"home": None, "layer": None, "material": None, "clothing": None}
@@ -95,17 +98,35 @@ def quiz():
 
 @app.route('/submit_score', methods=['POST'])
 def submit_score():
-    global score
     data = request.get_json()
-    score = data.get('score')
-    details = data.get('details')
-    print(f"Score received: {score}")
-    print(f"Details: {details}")
+    session_id = session.get('session_id')
+    
+    # If no session ID exists yet, create one
+    if not session_id:
+        session_id = str(datetime.now().timestamp())
+        session['session_id'] = session_id
+    
+    # Store score in our in-memory dictionary instead of Flask session
+    quiz_scores[session_id] = {
+        'score': data.get('score'),
+        'details': data.get('details')
+    }
+    
+    print(f"Score received for session {session_id}: {data.get('score')}")
     return jsonify({"message": "Score saved successfully!"})
 
 @app.route('/get_score', methods=['GET'])
 def get_score():
-    return jsonify({"score": score})
+    session_id = session.get('session_id')
+    
+    if session_id and session_id in quiz_scores:
+        data = quiz_scores[session_id]
+        return jsonify({
+            'score': data['score'], 
+            'details': data['details']
+        })
+    else:
+        return jsonify({'score': None, 'details': []})
 
 @app.route('/visits')
 def show_visits():

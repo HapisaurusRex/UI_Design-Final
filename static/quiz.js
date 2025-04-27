@@ -164,7 +164,6 @@ function showScore(results) {
   }
 
   sec.style.display = 'block';
-  localStorage.setItem('lastScore', total);
 
   fetch('/submit_score', {
     method: 'POST',
@@ -182,13 +181,25 @@ function showScore(results) {
 // ── initialization ──
 document.addEventListener('DOMContentLoaded', () => {
   const results = {};
-  const saved = localStorage.getItem('lastScore');
 
-  if (saved !== null) {
-    document.getElementById('score-count').textContent = saved;
-    document.getElementById('score-section').style.display = 'block';
-    document.getElementById('error-section').style.display = 'none';
-  }
+  fetch('/get_score')
+  .then(response => response.json())
+  .then(data => {
+    if (data.score !== null) {
+      document.getElementById('score-count').textContent = data.score;
+      document.getElementById('score-section').style.display = 'block';
+      if (data.details && data.details.length > 0) {
+        const errDiv = document.getElementById('error-list');
+        errDiv.innerHTML = '';
+        data.details.forEach(err => {
+          const li = document.createElement('li');
+          li.innerHTML = `<strong>${err.layer}:</strong> Correct answer was ${err.expected}. ${err.feedback}`;
+          errDiv.appendChild(li);
+        });
+        document.getElementById('error-section').style.display = 'block';
+      }
+    }
+  });
 
   // ── note the updated selectorList here ──
   handleQuiz(
@@ -208,8 +219,4 @@ document.addEventListener('DOMContentLoaded', () => {
     results
   );
 
-  document.getElementById('resetBtnGlobal').onclick = () => {
-    localStorage.removeItem('lastScore');
-    location.reload();
-  };
 });
