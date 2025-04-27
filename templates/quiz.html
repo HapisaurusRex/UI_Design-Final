@@ -29,6 +29,13 @@
     {% set idx = loop.index %}
     <div class="row mb-5 border rounded p-3 shadow-sm flex-column flex-md-row"
          id="scenario-{{ idx }}">
+
+      <div class="quiz-background-container">
+        <img src="{{ url_for('static', filename=q.background) }}" 
+              class="quiz-background-image" 
+              alt="Background for scenario {{ idx }}">
+      </div>
+
       <div class="col-12 col-md-4 mb-3 mb-md-0 position-relative"
            id="scooter-container-{{ idx }}">
         <img src="{{ url_for('static', filename='Images/scooter.png') }}"

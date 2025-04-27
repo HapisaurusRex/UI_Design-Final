@@ -29,6 +29,8 @@ visit_log = {
 quiz_media = {
     "questions": [
         {
+            "background": "Images/Background1.png",
+
             "base": [
                 {"name": "Wool",      "img": "Images/woolShirt.png"},
                 {"name": "Cotton",    "img": "Images/cottonShirt.png"},
@@ -46,6 +48,7 @@ quiz_media = {
             ]
         },
         {
+            "background": "Images/Background2.png",
             "base": [
                 {"name": "Dense Synthetic", "img": "Images/syntheticShirt.png"},
                 {"name": "Cotton",          "img": "Images/cottonShirt.png"},
