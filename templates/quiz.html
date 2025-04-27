@@ -4,28 +4,31 @@
 
 {% block content %}
 <div class="container">
-  <div class="mb-4">
-    <h2 class="text-center fw-bold">Quiz – Drag to layer Scooter for the Weather</h2>
+
+  <!-- NEW: Page header -->
+  <div class="text-center my-5">
+    <h1 class="fw-bold">Quiz</h1>
+    <h4 class="text-muted">Drag to layer Scooter for the Weather</h4>
   </div>
 
-  <!-- Score Section -->
-  <div id="score-section"
-       class="text-center mb-4 p-3 bg-light rounded"
-       style="display: none;">
-    <h4 class="text-success">
-      You scored <span id="score-count"></span>/6 correct!
-    </h4>
-    <p class="text-muted">Correct answers:</p>
-    <ul id="correct-answers" class="list-unstyled small mx-auto"></ul>
+  <!-- NEW: Score & feedback container -->
+  <div id="score-section" class="mb-5" style="display: none;">
+    <div class="p-4 bg-light rounded shadow-sm">
+      <h4 class="text-success text-center mb-4">
+        You scored <span id="score-count"></span>/6 correct!
+      </h4>
+      <div id="error-section">
+        <h5 class="text-danger">Incorrect Answers:</h5>
+        <div id="error-list"></div>
+      </div>
+    </div>
   </div>
 
+  <!-- existing quiz markup unchanged -->
   {% for q in quiz_media.questions %}
     {% set idx = loop.index %}
-    <!-- Scenario {{ idx }} -->
     <div class="row mb-5 border rounded p-3 shadow-sm flex-column flex-md-row"
          id="scenario-{{ idx }}">
-
-      <!-- Scooter & Feedback -->
       <div class="col-12 col-md-4 mb-3 mb-md-0 position-relative"
            id="scooter-container-{{ idx }}">
         <img src="{{ url_for('static', filename='Images/scooter.png') }}"
@@ -36,8 +39,6 @@
              class="position-absolute bg-white p-2 border rounded small"
              style="display: none;"></div>
       </div>
-
-      <!-- Layer Options -->
       <div class="col-12 col-md-8">
         <div class="mb-4">
           {% if idx == 1 %}
@@ -48,12 +49,10 @@
           {% else %}
             <h4 class="fw-semibold">
               Hot, Sunny, and Humid 
-              <small class="text-muted">75°F to 95°F (24°C to 35°C)</small>
+              <small class="text-muted">(75–95°F / 24–35°C)</small>
             </h4>
           {% endif %}
         </div>
-
-        <!-- Base -->
         <div id="layer{{ idx }}-base" class="layer-section mb-4">
           <h5>Base Layer:</h5>
           <div class="d-flex flex-wrap justify-content-center gap-3">
@@ -69,11 +68,7 @@
             {% endfor %}
           </div>
         </div>
-
-        <!-- Mid -->
-        <div id="layer{{ idx }}-mid"
-             class="layer-section mb-4"
-             style="display: none;">
+        <div id="layer{{ idx }}-mid" class="layer-section mb-4" style="display: none;">
           <h5>Mid Layer:</h5>
           <div class="d-flex flex-wrap justify-content-center gap-3">
             {% for item in q.mid %}
@@ -97,11 +92,7 @@
             {% endfor %}
           </div>
         </div>
-
-        <!-- Outer -->
-        <div id="layer{{ idx }}-outer"
-             class="layer-section mb-4"
-             style="display: none;">
+        <div id="layer{{ idx }}-outer" class="layer-section mb-4" style="display: none;">
           <h5>Outer Layer:</h5>
           <div class="d-flex flex-wrap justify-content-center gap-3">
             {% for item in q.outer %}
@@ -119,16 +110,13 @@
         </div>
       </div>
     </div>
-
     {% if not loop.last %}
       <hr class="my-5">
     {% endif %}
   {% endfor %}
 
   <div class="text-center mb-4">
-    <button id="resetBtnGlobal" class="btn btn-outline-secondary">
-      Reset Quiz
-    </button>
+    <button id="resetBtnGlobal" class="btn btn-outline-secondary">Reset Quiz</button>
   </div>
 </div>
 {% endblock %}
