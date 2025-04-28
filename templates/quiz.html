@@ -5,13 +5,20 @@
 {% block content %}
 <div class="container">
 
-  <!-- NEW: Page header -->
+  <!-- Tweak: force all option boxes to a uniform width -->
+  <style>
+    .option {
+      width: 10rem;        /* adjust this value as needed */
+    }
+  </style>
+
+  <!-- Page header -->
   <div class="text-center my-5">
     <h1 class="fw-bold">Quiz</h1>
     <h4 class="text-muted">Drag to layer Scooter for the Weather</h4>
   </div>
 
-  <!-- NEW: Score & feedback container -->
+  <!-- Score & feedback container -->
   <div id="score-section" class="mb-5" style="display: none;">
     <div class="p-4 bg-light rounded shadow-sm">
       <h4 class="text-success text-center mb-4">
@@ -24,20 +31,17 @@
     </div>
   </div>
 
-  <!-- existing quiz markup unchanged -->
   {% for q in quiz_media.questions %}
     {% set idx = loop.index %}
-    <div class="row mb-5 flex-column flex-md-row"
-         id="scenario-{{ idx }}">
+    <div class="row mb-5 flex-column flex-md-row" id="scenario-{{ idx }}">
 
       <div class="quiz-background-container">
         <img src="{{ url_for('static', filename=q.background) }}" 
-              class="quiz-background-image" 
-              alt="Background for scenario {{ idx }}">
+             class="quiz-background-image" 
+             alt="Background for scenario {{ idx }}">
       </div>
 
-      <div class="col-12 col-md-4 mb-3 mb-md-0 position-relative"
-           id="scooter-container-{{ idx }}">
+      <div class="col-12 col-md-4 mb-3 mb-md-0 position-relative" id="scooter-container-{{ idx }}">
         <img src="{{ url_for('static', filename=q.scooter) }}"
              alt="Scooter"
              class="img-fluid position-relative"
@@ -46,6 +50,7 @@
              class="position-absolute bg-white p-2 border rounded small"
              style="display: none;"></div>
       </div>
+
       <div class="col-12 col-md-8">
         <div class="mb-4">
           {% if idx == 1 %}
@@ -60,6 +65,7 @@
             </h4>
           {% endif %}
         </div>
+
         <div id="layer{{ idx }}-base" class="layer-section mb-4">
           <h5>Base Layer:</h5>
           <div class="d-flex flex-wrap justify-content-center gap-3">
@@ -75,6 +81,7 @@
             {% endfor %}
           </div>
         </div>
+
         <div id="layer{{ idx }}-mid" class="layer-section mb-4" style="display: none;">
           <h5>Mid Layer:</h5>
           <div class="d-flex flex-wrap justify-content-center gap-3">
@@ -99,24 +106,33 @@
             {% endfor %}
           </div>
         </div>
+
         <div id="layer{{ idx }}-outer" class="layer-section mb-4" style="display: none;">
           <h5>Outer Layer:</h5>
           <div class="d-flex flex-wrap justify-content-center gap-3">
             {% for item in q.outer %}
-              <div class="option text-center position-relative
-                          {% if idx == 2 and item.name.startswith('Ventilated') %}windbreaker-box{% endif %}">
-                <img src="{{ url_for('static', filename=item.img) }}"
-                     class="material{{ idx }} uniform-img img-thumbnail"
-                     data-name="{% if idx == 2 and item.name.startswith('Ventilated') %}Ventilated{% else %}{{ item.name }}{% endif %}"
-                     draggable="true">
+              <div class="option text-center position-relative">
+                {% if idx == 2 and item.name.startswith('Ventilated') %}
+                  <img src="{{ url_for('static', filename=item.img) }}"
+                       class="material{{ idx }} uniform-img img-thumbnail"
+                       data-name="Ventilated"
+                       draggable="true">
+                {% else %}
+                  <img src="{{ url_for('static', filename=item.img) }}"
+                       class="material{{ idx }} uniform-img img-thumbnail"
+                       data-name="{{ item.name }}"
+                       draggable="true">
+                {% endif %}
                 <p class="mt-2 mb-0">{{ item.name }}</p>
                 <span class="result-icon position-absolute"></span>
               </div>
             {% endfor %}
           </div>
         </div>
+
       </div>
     </div>
+
     {% if not loop.last %}
       <hr class="my-5">
     {% endif %}
@@ -126,7 +142,6 @@
     <button id="resetBtnGlobal" class="btn btn-outline-secondary">Reset Quiz</button>
   </div>
 </div>
-
 {% endblock %}
 
 {% block scripts %}

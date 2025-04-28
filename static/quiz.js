@@ -183,25 +183,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const results = {};
 
   fetch('/get_score')
-  .then(response => response.json())
-  .then(data => {
-    if (data.score !== null) {
-      document.getElementById('score-count').textContent = data.score;
-      document.getElementById('score-section').style.display = 'block';
-      if (data.details && data.details.length > 0) {
-        const errDiv = document.getElementById('error-list');
-        errDiv.innerHTML = '';
-        data.details.forEach(err => {
-          const li = document.createElement('li');
-          li.innerHTML = `<strong>${err.layer}:</strong> Correct answer was ${err.expected}. ${err.feedback}`;
-          errDiv.appendChild(li);
-        });
-        document.getElementById('error-section').style.display = 'block';
+    .then(response => response.json())
+    .then(data => {
+      if (data.score !== null) {
+        document.getElementById('score-count').textContent = data.score;
+        document.getElementById('score-section').style.display = 'block';
+        if (data.details && data.details.length > 0) {
+          const errDiv = document.getElementById('error-list');
+          errDiv.innerHTML = '';
+          data.details.forEach(err => {
+            const li = document.createElement('li');
+            li.innerHTML = `<strong>${err.layer}:</strong> Correct answer was ${err.expected}. ${err.feedback}`;
+            errDiv.appendChild(li);
+          });
+          document.getElementById('error-section').style.display = 'block';
+        }
       }
-    }
-  });
+    });
 
-  // ── note the updated selectorList here ──
+  // initialize each scenario
   handleQuiz(
     'scooter-container-1',
     '.material1',
@@ -212,11 +212,17 @@ document.addEventListener('DOMContentLoaded', () => {
   );
   handleQuiz(
     'scooter-container-2',
-    '.material2, .no-need-box, .windbreaker-box img',
+    '.material2, .no-need-box',
     expectedAll['2'],
     feedbackAll['2'],
     '2',
     results
   );
 
+  // ── Reset Quiz button ──
+  document
+    .getElementById('resetBtnGlobal')
+    .addEventListener('click', () => {
+      window.location.reload();
+    });
 });

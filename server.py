@@ -3,7 +3,6 @@ Flask for UI Final
 """
 
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
-from flask_session import Session
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
