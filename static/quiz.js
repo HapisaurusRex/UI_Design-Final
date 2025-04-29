@@ -1,7 +1,7 @@
 // ── expected answers ──
 const expectedAll = {
   '1': { base: 'Wool',      mid: 'Fleece',   outer: 'GoreTex'    },
-  '2': { base: 'Synthetic', mid: 'None',     outer: 'Ventilated' }
+  '2': { base: 'Cotton',    mid: 'None',     outer: 'Ventilated' }
 };
 
 // ── feedback messages ──
@@ -12,7 +12,7 @@ const feedbackAll = {
     outer: "Gore-Tex blocks wind and snow while breathing."
   },
   '2': {
-    base:  "Dense synthetics pull sweat off your skin, keeping you cool.",
+    base:  "Pulls sweat off your skin and helps it evaporate, keeping you cool and dry.",
     mid:   "No mid-layer needed in hot, humid weather!",
     outer: "Ventilated windbreakers keep rain out but let heat escape."
   }
