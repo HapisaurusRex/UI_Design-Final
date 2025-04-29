@@ -229,3 +229,23 @@ body {
   width: auto;
   border-radius: 2rem;
 }
+
+/* ── Mobile: keep quiz content visible ── */
+@media (max-width: 768px) {
+  /* let each scenario grow to fit its content */
+  #scenario-1,
+  #scenario-2 {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* ensure the question/options panel sits on top */
+  .col-12.col-md-8 {
+    position: relative;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+}
+
