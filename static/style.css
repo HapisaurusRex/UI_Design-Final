@@ -1,9 +1,28 @@
 /* ── Base Typography ── */
+/* style.css or inside <style> tag */
+.custom-navbar {
+  background-color: darkolivegreen!important; /* Your custom color */
+}
+
+/* Custom navbar background and text color */
+
+
+.custom-navbar .nav-link,
+.custom-navbar .navbar-brand {
+  color: #d7d5d5 !important; /* White text */
+}
+
+.custom-navbar .nav-link:hover,
+.custom-navbar .navbar-brand:hover {
+  color: goldenrod !important; /* Gold on hover */
+}
+
+
 body {
   font-size: 1.25rem; /* Base size: readable across screens */
   line-height: 1.6;
   font-family: system-ui, sans-serif;
-  color: #111;
+  color: #6b6b6b;
 }
 
 /* Hierarchy: topic titles, subtitles, highlights */
