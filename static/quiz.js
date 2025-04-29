@@ -24,7 +24,6 @@ function handleQuiz(containerId, selectorList, expected, feedback, prefix, resul
   let current = 0;
   const usedAnswers = { base: new Set(), mid: new Set(), outer: new Set() };
 
-  // attach dragstart to each draggable element
   document.querySelectorAll(selectorList).forEach(el => {
     el.addEventListener('dragstart', e => {
       if (el.getAttribute('draggable') === 'true') {
@@ -103,7 +102,7 @@ function handleQuiz(containerId, selectorList, expected, feedback, prefix, resul
     }
     updateDraggables();
 
-    // if both scenarios done, show score & errors
+    // only show score & summary once all are answered
     const done1 = Object.keys(results['1']||{}).length === 3;
     const done2 = Object.keys(results['2']||{}).length === 3;
     if (done1 && done2) showScore(results);
@@ -120,7 +119,6 @@ function showScore(results) {
   let total = 0;
   const errorsByScenario = {};
 
-  // tally and group
   for (const q of ['1','2']) {
     for (const layer of ['base','mid','outer']) {
       const correct = results[q]?.[layer];
@@ -137,11 +135,11 @@ function showScore(results) {
     }
   }
 
-  // update score count
+  // update score and clear old errors
   cnt.textContent = total;
   errDiv.innerHTML = '';
 
-  // only show error section if there are errors
+  // populate & show errors if any
   if (Object.keys(errorsByScenario).length) {
     Object.keys(errorsByScenario).forEach(q => {
       const wrapper = document.createElement('div');
@@ -161,47 +159,39 @@ function showScore(results) {
       errDiv.appendChild(wrapper);
     });
     errSection.style.display = 'block';
+  } else {
+    errSection.style.display = 'none';
   }
 
   sec.style.display = 'block';
 
+  // ── Persist the new score for next load ──
   fetch('/submit_score', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      score: total,
-      details: Object.values(errorsByScenario).flat()
-    })
+    body: JSON.stringify({ score: total })
   })
   .then(r => r.json())
-  .then(data => console.log(data.message))
-  .catch(err => console.error(err));
+  .then(data => console.log('Score saved:', data.message))
+  .catch(err => console.error('Save failed:', err));
 }
 
 // ── initialization ──
 document.addEventListener('DOMContentLoaded', () => {
   const results = {};
 
+  // restore only the total score
   fetch('/get_score')
     .then(response => response.json())
     .then(data => {
       if (data.score !== null) {
         document.getElementById('score-count').textContent = data.score;
         document.getElementById('score-section').style.display = 'block';
-        if (data.details && data.details.length > 0) {
-          const errDiv = document.getElementById('error-list');
-          errDiv.innerHTML = '';
-          data.details.forEach(err => {
-            const li = document.createElement('li');
-            li.innerHTML = `<strong>${err.layer}:</strong> Correct answer was ${err.expected}. ${err.feedback}`;
-            errDiv.appendChild(li);
-          });
-          document.getElementById('error-section').style.display = 'block';
-        }
+        document.getElementById('error-section').style.display = 'none';
+        document.getElementById('error-list').innerHTML = '';
       }
     });
 
-  // initialize each scenario
   handleQuiz(
     'scooter-container-1',
     '.material1',
@@ -222,7 +212,5 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Reset Quiz button ──
   document
     .getElementById('resetBtnGlobal')
-    .addEventListener('click', () => {
-      window.location.reload();
-    });
+    .addEventListener('click', () => window.location.reload());
 });
