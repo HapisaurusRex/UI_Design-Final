@@ -88,6 +88,8 @@ body{
 #scooter-container-1,
 #scooter-container-2 {
   min-height: 300px;
+  padding-left: 50pt;
+  padding-top: 130pt;
 }
 
 /* Feedback pop-ups */

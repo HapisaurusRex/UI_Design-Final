@@ -89,8 +89,8 @@ function handleQuiz(containerId, selectorList, expected, feedback, prefix, resul
         newImg.style.position = 'absolute';
         newImg.style.width    = '170px';
         newImg.style.height   = 'auto';
-        newImg.style.top      = '12%';
-        newImg.style.left     = '10%';
+        newImg.style.top      = '30%';
+        newImg.style.left     = '26%';
         newImg.style.zIndex   = layer==='base'?1: layer==='mid'?2:3;
         scooter.appendChild(newImg);
       }
