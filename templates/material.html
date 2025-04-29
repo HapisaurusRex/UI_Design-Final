@@ -3,6 +3,9 @@
 
 {% block content %}
 <style>
+    #instructions{  
+       text-align: center;
+    }
     .material-grid {
     display: flex;
     flex-direction: row;
@@ -103,9 +106,23 @@
     max-width: 100%;
     height: auto;
     }
+    @media (max-width: 450px) {
+    .modal-content {
+        width: 95%;  /* Increase modal width to 95% for smaller screens */
+        padding: 0.8rem;  /* Further reduce padding */
+    }
+
+    .modal-content h2 {
+        font-size: 1.1rem;  /* Further reduce font size for small screens */
+    }
+
+    .modal-content p {
+        font-size: 0.85rem;  /* Smaller font size to prevent overcrowding */
+    }
+    }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script> 
-
+<p id="instructions">Click on each material to learn about their properties.</p>
 <div class="material-grid" id="materialContainer">
   <!-- Cards will be injected here -->
 </div>
@@ -119,20 +136,26 @@
   </div>
 </div>
 
+
 <script>
     let game = null;
     class MaterialTestScene extends Phaser.Scene {
         constructor() {
             super({ key: 'MaterialTestScene' });
             this.material = null;
-            this.temperature = 20;
-            this.humidity = 50;
-            this.wind = 5;
+            this.temperature = 50;
+            this.humidity = 20;
             this.sliders={};
+            this.checkbox=null;
+            this.humidityParticles = null;
+            this.windParticles=null;
+            this.lastInteraction='humidity';
         }
 
         preload() {
             this.load.image('dummy', '../static/Images/Materials/dummy.png');
+            this.load.image('droplet', '../static/Images/Materials/droplet.png'); 
+            this.load.image('wind', '../static/Images/Materials/wind.png'); 
         }
 
         create(data) {
@@ -141,17 +164,29 @@
             this.children.each(child => child.destroy());
             // Display dynamic facts
             this.factsText = this.add.text(20,200, "placeholder", { fontSize: '24px', fill: '#fff' });
+            this.tempText= this.add.text(510,40, "placeholder", { fontSize: '24px', fill: '#fff' });
+            
+            // Configure physical world bounds
+            this.physics.world.setBounds(0, 250, this.sys.game.config.width, this.sys.game.config.height - 250);
 
             // Add dummy or character image
-            this.dummy = this.add.sprite(150, 350, 'dummy');
+            this.dummy = this.add.sprite(200, 500, 'dummy');
+            this.physics.world.enable(this.dummy);
+            this.dummy.body.immovable = true;
             this.dummy.setOrigin(0.2, 0.2);
-
+            this.senseText= this.add.text(20,505, "placeholder", { fontSize: '24px', fill: '#000' });
             // Create sliders
             this.createSlider(250, 50, 250, 50, 'temperature', this.temperature);
             this.createSlider(250, 100, 250, 50, 'humidity', this.humidity);
-            this.createSlider(250, 150, 250, 50, 'wind', this.wind);
 
-            // Initialize simulation
+            // Create checkbox for wind
+            this.checkbox = this.createCheckbox(this, 260, 150, 'Wind', false, (isChecked) => {
+                this.updateSimulation();
+            });
+
+            // Create humidity and wind
+            this.createHumidityParticles();
+            this.createWindParticles();
             this.updateSimulation();
         }
 
@@ -177,16 +212,184 @@
                 
                 // Update value (0-100)
                 this[name] = ((newX - x) / width) * 100;
+                this.lastInteraction=name;
                 this.updateSimulation();
             });
         }
 
+        createCheckbox(scene, x, y, name, initialChecked, callback) {
+            const checkbox = scene.add.container(x, y);
+            let label = this.add.text(20, y-10, name, { fontSize: '24px', color: '#ffffff' });
+
+            const box = scene.add.rectangle(0, 0, 20, 20, 0xffffff)
+                .setStrokeStyle(2, 0x000000);
+            checkbox.add(box);
+
+            const checkmark = scene.add.text(-5, -10, '✓', { 
+                fontSize: '24px', 
+                color: '#000000',
+                visible: initialChecked
+            });
+            checkbox.add(checkmark);
+
+            checkbox.checked = initialChecked;
+            checkmark.setVisible(checkbox.checked)
+
+            checkbox.setSize(20, 20);
+            checkbox.setInteractive({ useHandCursor: true });
+
+            checkbox.on('pointerdown', () => {
+                if(!checkbox.checked){this.lastInteraction='wind'}
+                checkbox.checked = !checkbox.checked;
+                checkmark.setVisible(checkbox.checked);
+                if (callback) callback(checkbox.checked);
+            });
+
+            return checkbox;
+        }
+
+        createHumidityParticles() {
+            // ADDED: Create particle group
+            this.humidityParticles = this.physics.add.group({
+                key: 'droplet',
+                repeat: 50,
+                setXY: { x: 200, y: 300, stepX: 10 },
+                collideWorldBounds: true,
+                bounceX: 1,
+                bounceY: 1
+            });
+
+            this.humidityParticles.children.iterate(p => {
+                p.setVelocity(
+                    Phaser.Math.Between(-100, 100),
+                    Phaser.Math.Between(-100, 100)
+                );
+                p.setScale(0.1);
+            });
+            
+            this.physics.add.collider(this.humidityParticles, this.dummy, (gameobjectA, gameobjectB) => {
+                const soak = this.material.properties.soak;
+                if(Math.random() < soak){
+                    if (gameobjectA.key==="droplet") {
+                        gameobjectA.body.stop(); 
+                        gameobjectA.body.enable = false; 
+                    }
+                    else{
+                        gameobjectB.body.stop(); 
+                        gameobjectB.body.enable = false; 
+                    }
+                }
+            });
+        }
+
+        createWindParticles() {
+            this.windParticles = this.physics.add.group();
+
+            // Update wind
+            this.physics.world.on('worldstep', () => {
+                this.windParticles.children.iterate(particle => {
+                    if (!particle) return;
+                    // Check if particle is outside the new bounds
+                    if (particle.y < 250 || particle.y > this.sys.game.config.height) {
+                        particle.destroy();
+                        this.updateSimulation();
+                    }
+                    if(!this.checkbox.checked){
+                        particle.destroy();
+                    }
+                });
+            });
+        }
+        convertTempToFahrenheit(value) {
+            // Map value (0-100) to Fahrenheit range (20°F to 85°F)
+            return Math.round((value / 100) * (85 - 20) + 20);
+        }
         updateSimulation() {
-            // Apply environment conditions (temperature, humidity, wind) to the material's properties
-            const baseScale = 1;
-            this.dummy.setScale(1,baseScale - (this.material.properties.shrink * (this.temperature - 30)/70));
-        
-            this.factsText.setText("This is where dynamic facts are placed");
+            const breathability = this.material.properties.breathability;
+            const insulation = this.material.properties.insulation;
+            const soakFact= this.material.soakFact;
+            const breathabilityFact=this.material.breathabilityFact;
+            const insulationFact=this.material.insulationFact;
+            const temp = this.temperature; // from 0 to 100
+
+            const tempF = this.convertTempToFahrenheit(this.temperature); // Fahrenheit
+            const idealMin = 60 - (insulation * 40); 
+            const idealMax = 80 - (insulation * 20); 
+
+
+            if (tempF < idealMin) {
+                this.senseText.setText("You feel cold ⛔️");
+            } else if (tempF > idealMax) {
+                this.senseText.setText("You feel hot ⛔️");
+            } else {
+                this.senseText.setText("You feel okay ✅");
+            }
+            // update humidity 
+            const desiredCountHum = Math.floor(this.humidity); // e.g. 75 humidity = 75 particles
+            const currentCountHum = this.humidityParticles.getChildren().length;
+            const currentCountWin = this.windParticles.getChildren().length;
+            
+            if (desiredCountHum > currentCountHum) {
+                // Add more
+                for (let i = 0; i < desiredCountHum - currentCountHum; i++) {
+                    const newDroplet = this.humidityParticles.create(
+                        Phaser.Math.Between(100, 700), 
+                        Phaser.Math.Between(50, 300), 
+                        'droplet'
+                    );
+                    newDroplet.setVelocity(
+                        Phaser.Math.Between(-100, 100),
+                        Phaser.Math.Between(-100, 100)
+                    );
+                    newDroplet.setBounce(1);
+                    newDroplet.setCollideWorldBounds(true);
+                    newDroplet.setScale(0.1);
+                }
+            } else if (desiredCountHum < currentCountHum) {
+                const particlesHum = this.humidityParticles.getChildren();
+                for (let i = currentCountHum - 1; i >= desiredCountHum; i--) {
+                    particlesHum[i].destroy();
+                }
+            }
+            
+            // update wind
+            if (currentCountWin < 20 && this.checkbox.checked) {
+                for (let i = 0; i < 20 - currentCountWin; i++) {
+                    const newWind = this.windParticles.create(
+                        Phaser.Math.Between(100, 700), 
+                        300, 
+                        'wind'
+                    );
+                    newWind.setVelocity(
+                        0,
+                        Phaser.Math.Between(50, 100)
+                    );
+                    newWind.setBounce(1);
+                    newWind.setCollideWorldBounds(false);
+                    newWind.setScale(0.1);
+                    newWind.customType = 'wind';
+
+                    // Decide if this particle can collide
+                    if (breathability<Math.random()) {
+                        this.physics.add.collider(newWind, this.dummy, (gameobjectA, gameobjectB) => {
+                            if (gameobjectA.customType === 'wind') {
+                                gameobjectA.setRotation(gameobjectA.rotation + Math.PI); 
+                            } else if (gameobjectB.customType === "wind") {
+                                gameobjectB.setRotation(gameobjectB.rotation + Math.PI); 
+                            }
+                        });
+                    }
+                }
+            }
+
+            if (this.checkbox.checked && this.lastInteraction === 'wind') {
+                this.factsText.setText(breathabilityFact);
+            } else if (this.lastInteraction === 'temperature') {
+                this.factsText.setText(insulationFact);
+            } else if (this.lastInteraction === 'humidity') {
+                this.factsText.setText(soakFact);
+            }
+            this.tempText.setText(`${this.convertTempToFahrenheit(this.temperature)}°F`);
         }
     }
 
@@ -208,6 +411,13 @@
             },
             input: {
             activePointers: 3
+            },
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    gravity: { y: 0 },
+                    debug: false
+                }
             }
             });
         
@@ -220,74 +430,86 @@
             image: "Materials/wool.jpg",
             description: "Wool is a natural fiber made from animal hair.",
             properties: {
-            shrink: 0.1,   
+            breathability: 0.5,   
             soak: 0.2,     
-            insulation: 0.9
+            insulation: 1.0
             },
             facts: [
             "Wool keeps warmth even when wet.",
+            "Wool great for cold and damp weather.",
             "Wool is odor resistant.",
             "Wool is not strong.",
-            "Wool great for cold weather.",
-            "Wool great for wet weather."
-            ]
+            ],
+            breathabilityFact:"Wool is moderately breathable",
+            soakFact:"Wool is not necessarily water resistant.",
+            insulationFact:"Wool retains warmth even when wet."
         },
         {
             name: "Cotton",
             image: "Materials/cotton.jpg",
             description: "Cotton is a natural fiber made from the Gossypium plant.",
             properties: {
-            shrink: 0.2,
-            soak: 0.5,  
+            breathability: 1.0,
+            soak: 0.7,  
             insulation: 0.3 
             },
             facts: [
             "Cotton doesn't keep you warm when wet.",
+            "Cotton is better for warm and hot weather.",
             "Cotton is comfortable and low maintenance.",
-            "Cotton doesn't keep you warm when wet."
-            ]
+            ],
+            breathabilityFact:"Cotton is highly breathable.",
+            soakFact:"Cotton fabrics hold onto moisture.",
+            insulationFact:"Cotton is not very insulating."
         },
         {
             name: "Fleece",
             image: "Materials/fleece.jpg",
             description: "Fleece is a synthetic fiber that looks like fur.",
             properties: {
-            shrink: 0.2,
-            soak: 0.5,  
-            insulation: 0.3 
+            breathability: 0.2,
+            soak: 0.1,  
+            insulation: 0.7 
             },
             facts: [
             "Fleece is lighter than wool.",
             "Fleece is warm.",
             "Fleece is not durable.",
             "Fleece is high maintenance.",
-            "Fleece is not good when wet.",
+            "Fleece is not good in very humid weather.",
             "Fleece is good for cold weather.",
             "Fleece is good for windy weather."
-            ]
+            ],
+            breathabilityFact:"Fleece has low breathability.",
+            soakFact:"Fleece is somewhat water resistant.",
+            insulationFact:"Fleece provides moderate insulation."
+
         },
         {
             name: "Down",
             image: "Materials/down.jpg",
             description: "Down is a natural fiber made from bird feathers.",
             properties: {
-            shrink: 0.2,
-            soak: 0.5,  
-            insulation: 0.3 
+            breathability: 0.5,
+            soak: 0.0,  
+            insulation: 1.0 
             },
             facts: [
             "Down is light and warm.",
             "Down needs to be containedd by other materials.",
             "Down is good for cold weather."
-            ]
+            ],
+            breathabilityFact:"Down is moderately breathable",
+            soakFact:"Down feathers are extremely water-averse.",
+            insulationFact:"Down is one of the best natural insulators."
         },
         {
             name: "Synthetic",
             image: "Materials/synthetic.jpg",
             description: "Synthetics are man made fibers from chemicals (usually oil).",
             properties: {
-            shrink: 0.2,
-            soak: 0.5,  
+            breathability: 0.2,
+            soak: 0.0,  
             insulation: 0.3
             },
             facts: [
@@ -296,7 +518,10 @@
             "Synthetics are not very breathable and are prone to smells.",
             "Synthetics are a greate material for down jackets.",
             "Synthetics are waterproof."
-            ]
+            ],
+            breathabilityFact:"Most synthetic fabrics are not breathable",
+            soakFact:"Most synthetic fabrics are designed to resist soaking",
+            insulationFact:"Synthetic material provides moderate insulation."
         }
     ];
 
