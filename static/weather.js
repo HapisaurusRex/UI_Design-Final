@@ -1,17 +1,17 @@
 const weatherPictureData = {
     temperature: [
       {
-        text: "60 and below (wear more)",
+        text: "50F and below (wear more)",
         img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpng.pngtree.com%2Fpng-clipart%2F20230914%2Foriginal%2Fpngtree-winter-jacket-vector-png-image_12147427.png&f=1&nofb=1&ipt=ce8870ef3d1f113d648e12f9047f969dda9b799280adbb51b8b156885ed1b7a6",
         alt: "Puffy winter jacket"
       },
       {
-        text: "Between 60F - 80F (comfortable)",
+        text: "Between 50F - 75F (comfortable)",
         img: "https://clipart-library.com/8300/2368/clothing-_shirt-_pants-_work-daily_routine-_daily-routine-512.png",
         alt: "T-shirt and pants"
       },
       {
-        text: "80 and above (wear less)",
+        text: "75F and above (wear less)",
         img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpng.pngtree.com%2Fpng-clipart%2F20230914%2Foriginal%2Fpngtree-swim-trunk-clipart-the-image-is-of-cartoon-swim-trunks-vector-png-image_12151693.png&f=1&nofb=1&ipt=a902b87f90ef40292d61865f4b9de049f25ee3a42bc32c0407b43523ce5ef012",
         alt: "Swim trunks"
       }
@@ -69,7 +69,7 @@ const weatherPictureData = {
       container.append(`
         <div class="col-md-4 text-center">
           <p><strong>${text}</strong></p>
-          <img class="img-fluid" src="${img}" alt="${alt}" />
+          <img class="img-fluid weather-img" src="${img}" alt="${alt}" />
         </div>
       `);
     });
@@ -93,7 +93,7 @@ const weatherPictureData = {
       container.append(`
         <div class="col-md-4 text-center">
           <h5><strong>${label}</strong><br><small>${subtext}</small></h5>
-          <img src="${img}" alt="${alt}" class="img-fluid my-2" style="max-height: 200px;" />
+          <img src="${img}" alt="${alt}" class="img-fluid my-2 weather-img" style="max-height: 200px;" />
           <p><em>${advice}</em></p>
         </div>
       `);
