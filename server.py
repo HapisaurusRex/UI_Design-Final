@@ -82,7 +82,7 @@ def home():
 @app.route('/layer')
 def layer():
     log_visit('layer')
-    return render_template('layer.html')
+    return render_template('layer.html', visit_log=visit_log)
 
 @app.route('/material')
 def material():

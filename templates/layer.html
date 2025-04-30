@@ -55,6 +55,26 @@
   .left-stack, .right-stack {
     z-index: 2;
   }
+
+  #progress {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+#progress svg {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+}
+.progress-btn text{
+  color: #f0f0f0;
+};
+
+.progress-btn:hover {
+  fill: #f0f0f0;
+};
+
   
 </style>
 <div>
@@ -140,9 +160,18 @@
     </div>
   </div>
 
+  <div class="concept">
+    <div id="progress">
+
+    </div>
+  </div>
 
 {% endblock %}
 
 {% block scripts %}
+<script>
+  window.triangleData = {{ visit_log | tojson }};
+</script>
+<script src="{{ url_for('static', filename='triangle.js') }}"></script>
 <script src="{{ url_for('static', filename='layering.js') }}"></script>
 {% endblock %}
