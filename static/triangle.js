@@ -54,7 +54,6 @@
         </a>
   
       </svg>
-      ${showQuiz ? '<div class="text-center mt-3"><button class="btn btn-primary">Quiz</button></div>' : ''}
     `;
   
     const container = document.getElementById("progress");
