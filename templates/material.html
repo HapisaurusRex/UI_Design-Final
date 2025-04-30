@@ -120,6 +120,22 @@
         font-size: 0.85rem;  /* Smaller font size to prevent overcrowding */
     }
     }
+      /* Progress triangle things */
+  #progress {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+#progress svg {
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+}
+
+.progress-btn:hover {
+  fill: #4CAF50;
+};
 </style>
 <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script> 
 <p id="instructions">Click on each material to learn about their properties.</p>
@@ -135,7 +151,11 @@
     <div id="materialSimulation"></div>
   </div>
 </div>
+<div class="concept">
+    <div id="progress">
 
+    </div>
+  </div>
 
 <script>
     let game = null;
@@ -577,4 +597,11 @@
     }
     };
 </script>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  window.triangleData = {{ visit_log | tojson }};
+</script>
+<script src="{{ url_for('static', filename='triangle.js') }}"></script>
 {% endblock %}

@@ -5,57 +5,66 @@
 <style>
 /* To sort out later */
 
+.layer-stack-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .layer-stack {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    margin-top: 1rem;
-  }
+  padding: 10px 20px;
+  text-align: center;
+}
+
+.layer-box {
+  margin-bottom: 0.5rem;
+  padding: 10px;
+  border-radius: 0.5rem;
+  border: 1px solid #333;
+  border-radius: 1rem;
+}
+
+.caption {
+  margin-top: 1rem;
+}
 
 /* SEE SAW */
 
-.layer-box {
-    padding: 10px 20px;
-    border-radius: 1rem;
-    border: 1px solid #333;
-    width: 50%;
-    text-align: center;
-  }
-  
-  #seesaw-scene {
-    margin-top: 2rem;
-    position: relative;
-    height: 300px;
-  }
-  
-  .seesaw {
-    position: absolute;
-    bottom: 25px;
-    left: 50%;
-    transform: translateX(-50%) rotate(-10deg);
-    width: 600px;
-    height: 10px;
-    background: #111;
-    z-index: 0;
-  }
-  
-  .triangle {
-    position: absolute;
-    bottom: 0px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 25px solid transparent;
-    border-right: 25px solid transparent;
-    border-top: 50px solid #a4c8ff;
-    z-index: 1;
-  }
-  
-  .left-stack, .right-stack {
-    z-index: 2;
+svg {
+    width: 90vw;
+    height: auto; /* remove fixed height */
+    display: block;
   }
 
+  .box {
+    fill: white;
+    stroke: #333;
+    stroke-width: 1;
+
+  }
+
+  .box-text {
+    fill: black;
+    font-size: 8px;
+    text-anchor: middle;
+    dominant-baseline: central;
+    font-family: sans-serif;
+    pointer-events: none;
+  }
+
+  .seesaw-bar {
+    fill: #283349;
+    filter: drop-shadow(0px 2px 2px #0008);
+  }
+
+  .fulcrum {
+    fill: #444;
+  }
+
+
+  /* Progress triangle things */
   #progress {
   display: flex;
   justify-content: center;
@@ -63,19 +72,15 @@
 }
 
 #progress svg {
-  max-width: 400px;
+  max-width: 500px;
   width: 100%;
   height: auto;
 }
-.progress-btn text{
-  color: #f0f0f0;
-};
 
 .progress-btn:hover {
-  fill: #f0f0f0;
+  fill: #4CAF50;
 };
 
-  
 </style>
 <div>
     <span class="topic-title">Layering</span> is when you wear multiple types of materials to keep you comfortable in multiple weather conditions. A layer can be anything, but they generally fit into 3 categories:
@@ -110,26 +115,30 @@
 </div>
 
 <div class="concept mt-5">
-    <div class="text-center mb-3">
-      <strong>There are 2 schools of thought for layering:</strong>
+    <div>
+      <span class="highlight">General guidelines</span> to layering for  <strong>hot</strong> and <strong>cold</strong> weather
     </div>
-    <div class="row justify-content-center align-items-start">
-      <!-- 2 Layers (Hot) -->
-      <div class="col-md-5 text-center">
-        <p><strong>Use 2 layers for hot weather</strong></p>
-        <div class="layer-stack">
-          <div class="layer-box">Outer layer</div>
-          <div class="layer-box">Base layer</div>
+    <div class="row justify-content-center align-items-stretch text-center">
+      <!-- 2 Layers -->
+      <div class="col-md-5 d-flex flex-column align-items-center">
+        <div class="layer-stack-wrapper d-flex flex-column justify-content-between align-items-center w-100">
+          <div class="layer-stack">
+            <div class="layer-box">Outer layer</div>
+            <div class="layer-box">Base layer</div>
+          </div>
+          <p class="caption"><strong>Use 2 layers for hot weather</strong></p>
         </div>
       </div>
-  
-      <!-- 3 Layers (Cold) -->
-      <div class="col-md-5 text-center">
-        <p><strong>Use 3 layers for cold weather</strong></p>
-        <div class="layer-stack">
-          <div class="layer-box">Outer layer</div>
-          <div class="layer-box">Mid layer</div>
-          <div class="layer-box">Base layer</div>
+    
+      <!-- 3 Layers -->
+      <div class="col-md-5 d-flex flex-column align-items-center">
+        <div class="layer-stack-wrapper d-flex flex-column justify-content-between align-items-center w-100">
+          <div class="layer-stack">
+            <div class="layer-box">Outer layer</div>
+            <div class="layer-box">Mid layer</div>
+            <div class="layer-box">Base layer</div>
+          </div>
+          <p class="caption"><strong>Use 3 layers for cold weather</strong></p>
         </div>
       </div>
     </div>
@@ -137,27 +146,51 @@
 
 <div class="concept text-center">
     <p>You can always <strong>wear more</strong>, but remember you will <strong>weigh more</strong>.</p>
-  
-    <div class="row justify-content-center align-items-end position-relative" id="seesaw-scene">
+    <svg viewBox="0 0 400 230">
       <!-- Left Stack -->
-      <div class="col-md-4 d-flex flex-column align-items-center left-stack">
-        <div class="layer-box">Outer layer</div>
-        <div class="layer-box">Mid layer</div>
-        <div class="layer-box">Base layer</div>
-      </div>
-  
+      <g transform="translate(120, 100)">
+        <g transform="translate(0, -60)">
+          <rect x="-40" y="0" width="80" height="20" rx="10" ry="10" class="box" />
+          <text x="0" y="10" class="box-text">Outer layer</text>
+        </g>
+        <g transform="translate(0, -35)">
+          <rect x="-40" y="0" width="80" height="20" rx="10" ry="10" class="box" />
+          <text x="0" y="10" class="box-text">Mid layer</text>
+        </g>
+        <g transform="translate(0, -10)">
+          <rect x="-40" y="0" width="80" height="20" rx="10" ry="10" class="box" />
+          <text x="0" y="10" class="box-text">Base layer</text>
+        </g>
+      </g>
+    
       <!-- Right Stack -->
-      <div class="col-md-4 d-flex flex-column align-items-center right-stack">
-        <div class="layer-box">Outer layer</div>
-        <div class="layer-box">Mid layer</div>
-        <div class="layer-box">Mid layer</div>
-        <div class="layer-box">Base layer</div>
-      </div>
+      <g transform="translate(280, 130)">
+        <g transform="translate(0, -80)">
+          <rect x="-40" y="0" width="80" height="20" rx="10" ry="10" class="box" />
+          <text x="0" y="10" class="box-text">Outer layer</text>
+        </g>
+        <g transform="translate(0, -55)">
+          <rect x="-40" y="0" width="80" height="20" rx="10" ry="10" class="box" />
+          <text x="0" y="10" class="box-text">Mid layer</text>
+        </g>
+        <g transform="translate(0, -30)">
+          <rect x="-40" y="0" width="80" height="20" rx="10" ry="10" class="box" />
+          <text x="0" y="10" class="box-text">Mid layer</text>
+        </g>
+        <g transform="translate(0, -5)">
+          <rect x="-40" y="0" width="80" height="20" rx="10" ry="10" class="box" />
+          <text x="0" y="10" class="box-text">Base layer</text>
+        </g>
+      </g>
+    
+      <!-- Seesaw bar -->
+      <rect x="100" y="140" width="200" height="8" transform="rotate(10 200 140)" class="seesaw-bar" />
+    
+      <!-- Fulcrum -->
+      <polygon points="190,148 210,148 200,168" class="fulcrum" />
+    </svg>
+    
   
-      <!-- Seesaw -->
-      <div class="seesaw"></div>
-      <div class="triangle"></div>
-    </div>
   </div>
 
   <div class="concept">

@@ -5,11 +5,12 @@
       weather: false,
     };
   
-    const getColor = (key) => (data[key] ? "#4CAF50" : "#E0E0E0");
+    const getColor = (key) => (data[key] ? "rgb(83, 122, 16)" : "#FFF");
+    const getText = (key) => (data[key] ? "#FFF" : "#000");
     const showQuiz = data.layer && data.material && data.weather;
   
     const triangle = `
-      <svg viewBox="0 0 300 260" width="300" height="260" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <svg viewBox="0 0 300 260" width="300" height="260" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink class="progress-svg">
   
         <polygon points="150,0 0,260 300,260" fill="none" stroke="black" stroke-width="2"/>
   
@@ -22,7 +23,7 @@
             stroke-width="1"
             class="progress-btn"
           />
-          <text x="100" y="150" text-anchor="middle" font-size="12" fill="black">Layering</text>
+          <text x="100" y="150" text-anchor="middle" font-size="12" fill="${getText('layer')}">Layering</text>
         </a>
   
         <!-- Material -->
@@ -34,7 +35,7 @@
             stroke-width="1"
             class="progress-btn"
           />
-          <text x="150" y="230" text-anchor="middle" font-size="12" fill="black">Material</text>
+          <text x="150" y="230" text-anchor="middle" font-size="12" fill="${getText('material')}">Material</text>
         </a>
   
         <!-- Clothing -->
@@ -46,7 +47,7 @@
             stroke-width="1"
             class="progress-btn"
           />
-          <text x="200" y="150" text-anchor="middle" font-size="12" fill="black">
+          <text x="200" y="150" text-anchor="middle" font-size="12" fill="${getText('weather')}">
             <tspan x="200">Weather</tspan>
             <tspan x="200" dy="14">Type</tspan>
           </text>

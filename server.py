@@ -10,14 +10,6 @@ app.secret_key = 'scooter'  # still needed for CSRF protection
 
 quiz_scores = {}
 
-# Sample data (for existing item view)
-data = {
-    1: {
-        "title": "Casino Royale",
-        "image": "https://m.media-amazon.com/images/M/MV5BMTM5MjI4NDExNF5BMl5BanBnXkFtZTcwMDM1MjMzMQ@@._V1_.jpg",
-    }
-}
-
 visit_log = {
     "home": None,
     "layer": None,
@@ -87,12 +79,12 @@ def layer():
 @app.route('/material')
 def material():
     log_visit('material')
-    return render_template('material.html')
+    return render_template('material.html', visit_log=visit_log)
 
 @app.route('/weather')
 def clothing():
     log_visit('weather')
-    return render_template('weather.html')
+    return render_template('weather.html', visit_log=visit_log)
 
 @app.route('/quiz')
 def quiz():

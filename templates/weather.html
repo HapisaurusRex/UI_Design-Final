@@ -2,21 +2,6 @@
 {% block content %}
 <!-- To unify into CSS file later.  -->
 <style>
-    body{
-    font-size: 1.5rem;
-}
-.topic-title{
-    font-weight: bold;
-    font-size: 3rem;
-}
-.highlight{
-    font-weight: bold;
-    font-size: 2rem;
-}
-.concept{
-    margin: 50px 0;
-}
-
 .layer-img{
     height: 200px;
     width: auto;
@@ -24,59 +9,23 @@
 
 /* To sort out later */
 
-.layer-stack {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    margin-top: 1rem;
-  }
 
-/* SEE SAW */
+  /* Progress triangle things */
+  #progress {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
 
-.layer-box {
-    background-color: #a4c8ff;
-    padding: 10px 20px;
-    margin: 5px 0;
-    border-radius: 10px;
-    border: 1px solid #333;
-    font-weight: bold;
-    width: 180px;
-    text-align: center;
-  }
-  
-  #seesaw-scene {
-    margin-top: 2rem;
-    position: relative;
-    height: 300px;
-  }
-  
-  .seesaw {
-    position: absolute;
-    bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%) rotate(-10deg);
-    width: 600px;
-    height: 10px;
-    background: #111;
-    z-index: 0;
-  }
-  
-  .triangle {
-    position: absolute;
-    bottom: 90px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 25px solid transparent;
-    border-right: 25px solid transparent;
-    border-top: 50px solid #a4c8ff;
-    z-index: 1;
-  }
-  
-  .left-stack, .right-stack {
-    z-index: 2;
-  }
+#progress svg {
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+}
+
+.progress-btn:hover {
+  fill: #4CAF50;
+};
   
 </style>
 
@@ -114,8 +63,18 @@
         </div>
     </div>
 </div>
+<div class="concept">
+    <div id="progress">
+
+    </div>
+  </div>
 {% endblock %}
 
+
 {% block scripts %}
+<script>
+  window.triangleData = {{ visit_log | tojson }};
+</script>
+<script src="{{ url_for('static', filename='triangle.js') }}"></script>
 <script src="{{ url_for('static', filename='weather.js') }}"></script>
 {% endblock %}
