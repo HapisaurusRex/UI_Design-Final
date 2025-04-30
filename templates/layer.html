@@ -20,14 +20,31 @@
 
 .layer-box {
   margin-bottom: 0.5rem;
-  padding: 10px;
+  padding: 10px 50px;
   border-radius: 0.5rem;
-  border: 1px solid #333;
-  border-radius: 1rem;
+  border: 3px solid #333;
+  border-radius: 3rem;
+  font-weight: 400;
+}
+
+.layer-box-hidden {
+  visibility: hidden;
+  
 }
 
 .caption {
   margin-top: 1rem;
+}
+
+.tip-display{
+  margin: 4rem 0 2rem 0;
+}
+.layering-advice{
+  margin: 0 0 2rem 0;
+}
+
+.layer-title{
+  margin-bottom: 1rem;
 }
 
 /* SEE SAW */
@@ -90,7 +107,7 @@ div.concept:first-of-type{
 </div>
 
 <div class="concept">
-    <div>
+    <div class="layer-title">
         <span class="highlight"> Base layers</span> let you sweat and are comfy to wear.
     </div>
     <div class="container">
@@ -99,7 +116,7 @@ div.concept:first-of-type{
     </div>
 </div>
 <div class="concept">
-    <div>
+    <div class="layer-title">
         <span class="highlight"> Mid layers</span> keep you warm when needed
     </div>
     <div class="container">
@@ -108,7 +125,7 @@ div.concept:first-of-type{
     </div>
 </div>
 <div class="concept">
-    <div>
+    <div class="layer-title">
         <span class="highlight"> Outer layers</span> protect you (and other layers) from rain, wind, and snow
     </div>
     <div class="container">
@@ -118,7 +135,7 @@ div.concept:first-of-type{
 </div>
 
 <div class="concept mt-5">
-    <div>
+    <div class="layering-advice">
       <span class="highlight">General guidelines</span> to layering for  <strong>hot</strong> and <strong>cold</strong> weather
     </div>
     <div class="row justify-content-center align-items-stretch text-center">
@@ -126,6 +143,7 @@ div.concept:first-of-type{
       <div class="col-md-5 d-flex flex-column align-items-center">
         <div class="layer-stack-wrapper d-flex flex-column justify-content-between align-items-center w-100">
           <div class="layer-stack">
+            <div class="layer-box layer-box-hidden">Hidden layer</div>
             <div class="layer-box">Outer layer</div>
             <div class="layer-box">Base layer</div>
           </div>
@@ -145,11 +163,11 @@ div.concept:first-of-type{
         </div>
       </div>
     </div>
-  </div>
 
-<div class="concept text-center">
-    <p>You can always <strong>wear more</strong>, but remember you will <strong>weigh more</strong>.</p>
-    <svg viewBox="0 0 400 230">
+
+
+    <p class="text-center tip-display">You can always <strong>wear more</strong>, but remember you will <strong>weigh more</strong>.</p>
+    <svg viewBox="10 30 400 230">
       <!-- Left Stack -->
       <g transform="translate(120, 100)">
         <g transform="translate(0, -60)">
@@ -192,9 +210,7 @@ div.concept:first-of-type{
       <!-- Fulcrum -->
       <polygon points="190,148 210,148 200,168" class="fulcrum" />
     </svg>
-    
-  
-  </div>
+  </div> 
 
   <div class="concept">
     <div id="progress">
