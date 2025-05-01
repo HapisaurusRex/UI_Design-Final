@@ -235,6 +235,11 @@ body {
   border-radius: 2rem;
 }
 
+/* Add spacing between navbar items */
+.custom-navbar .nav-item {
+  margin: 0 1rem;
+}
+
 /* ── Mobile: keep quiz content visible ── */
 @media (max-width: 768px) {
   /* let each scenario grow to fit its content */
