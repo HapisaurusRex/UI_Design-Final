@@ -33,9 +33,9 @@ quiz_media = {
                 {"name": "Wool",      "img": "Images/woolShirt.png"}
             ],
             "outer": [
-                {"name": "GoreTex",                "img": "Images/goretexShirt.png"},
+                {"name": "Windbreaking Synthetics",                "img": "Images/goretexShirt.png"},
                 {"name": "Down",                   "img": "Images/downShirt.png"},
-                {"name": "Polartec Power Shield",  "img": "Images/PolartecShirt.png"}
+                {"name": "Insulating Synthetics",  "img": "Images/PolartecShirt.png"}
             ]
         },
         {
@@ -54,7 +54,7 @@ quiz_media = {
             "outer": [
                 {"name": "Ventilated Windbreaker", "img": "Images/windbreaker.png"},
                 {"name": "Down",                   "img": "Images/downShirt.png"},
-                {"name": "Polartec Power Shield",  "img": "Images/PolartecShirt.png"}
+                {"name": "Insulating Synthetics",  "img": "Images/PolartecShirt.png"}
             ]
         }
     ]

@@ -1,6 +1,6 @@
 // ── expected answers ──
 const expectedAll = {
-  '1': { base: 'Wool',      mid: 'Fleece',   outer: 'GoreTex'    },
+  '1': { base: 'Wool',      mid: 'Fleece',   outer: 'Windbreaking Synthetics'    },
   '2': { base: 'Cotton',    mid: 'None',     outer: 'Ventilated' }
 };
 
@@ -9,7 +9,7 @@ const feedbackAll = {
   '1': {
     base:  "Merino wool wicks moisture and regulates temperature.",
     mid:   "Fleece is warm, breathable, and lightweight.",
-    outer: "Gore-Tex blocks wind and snow while breathing."
+    outer: "Windbreaking synthetics like Gore-Tex blocks wind and snow while breathing."
   },
   '2': {
     base:  "Pulls sweat off your skin and helps it evaporate, keeping you cool and dry.",
