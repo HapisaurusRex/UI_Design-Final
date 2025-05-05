@@ -5,22 +5,23 @@
       weather: false,
     };
   
+    // const getColor = (key) => (data[key] ? "rgb(83, 122, 16)" : "#FFF");
+    // const getText = (key) => (data[key] ? "#FFF" : "#000");
     const getColor = (key) => (data[key] ? "rgb(83, 122, 16)" : "#FFF");
-    const getText = (key) => (data[key] ? "#FFF" : "#000");
-    const showQuiz = data.layer && data.material && data.weather;
-  
+    const getText = (key) => (data[key] ? "#FFF" : "rgb(218, 165, 32)");
+
     const triangle = `
-      <svg viewBox="0 0 300 260" width="300" height="260" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink class="progress-svg">
+      <svg viewBox="0 0 300 265" width="300" height="260" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink class="progress-svg">
   
-        <polygon points="150,0 0,260 300,260" fill="none" stroke="black" stroke-width="2"/>
+        <polygon points="150,0 0,260 300,260" fill="none" stroke="#a9a9a9" stroke-width="5"/>
   
         <!-- Layering -->
         <a xlink:href="/layer">
           <polygon
             points="150,0 0,260 150,173.2"
             fill="${getColor('layer')}"
-            stroke="black"
-            stroke-width="1"
+            stroke=" #a9a9a9"
+            stroke-width="2"
             class="progress-btn"
           />
           <text x="100" y="150" text-anchor="middle" font-size="12" fill="${getText('layer')}">Layering</text>
@@ -31,8 +32,8 @@
           <polygon
             points="0,260 300,260 150,173.2"
             fill="${getColor('material')}"
-            stroke="black"
-            stroke-width="1"
+            stroke=" #a9a9a9"
+            stroke-width="2"
             class="progress-btn"
           />
           <text x="150" y="230" text-anchor="middle" font-size="12" fill="${getText('material')}">Material</text>
@@ -43,8 +44,8 @@
           <polygon
             points="300,260 150,0 150,173.2"
             fill="${getColor('weather')}"
-            stroke="black"
-            stroke-width="1"
+            stroke=" #a9a9a9"
+            stroke-width="2"
             class="progress-btn"
           />
           <text x="200" y="150" text-anchor="middle" font-size="12" fill="${getText('weather')}">

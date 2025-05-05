@@ -14,7 +14,7 @@
 
 .custom-navbar .nav-link:hover,
 .custom-navbar .navbar-brand:hover {
-  color: goldenrod !important; /* Gold on hover */
+  color: rgb(218, 165, 32) !important; /* Gold on hover */
 }
 
 

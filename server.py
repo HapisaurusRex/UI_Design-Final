@@ -69,7 +69,7 @@ def log_visit(page_name):
 @app.route('/')
 def home():
     log_visit('home')
-    return render_template('home.html')
+    return render_template('home.html', visit_log=visit_log)
 
 @app.route('/layer')
 def layer():

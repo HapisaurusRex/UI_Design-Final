@@ -4,7 +4,6 @@
 <style>
   /* ── Triangle Nav Styles ── */
 .triangle-svg text {
-  fill: #daa520; /* Your desired text color */
   font-weight: bold;
   font-family: sans-serif;
   pointer-events: none; /* So clicks go to the polygon, not the text */
@@ -14,8 +13,18 @@
   text-decoration: none;
 }
 
+.container-container{
+  position: relative;
+  height: 80vh;
+}
+
 .triangle-container {
-  max-width: 500px;
+  position: relative;
+  height: 80vh;
+  /* position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,50%); */
   margin: 0 auto;
 }
 
@@ -33,9 +42,9 @@
 }
 
 
+
 /* Clickable wedges */
 .triangle-btn {
-  fill: white!important;
   stroke: #a9a9a9 !important;
   stroke-width: 2px !important;
   cursor: pointer;
@@ -43,44 +52,54 @@
 }
 
 .triangle-btn:hover {
-  fill: rgb(232, 232, 232) !important;
+  fill: rgb(208, 203, 146) !important;
 }
 </style>
 
 <div class="text-center mt-5 mb-4">
   <h1 class="fw-bold">3 Keys to Dressing for the Weather</h1>
-  <p class="text-muted">Select a section to continue.</p>
+  <p class="text-muted">Click on a section to learn about it.</p>
 </div>
+<!-- <div class="container-container">
+  <div class="triangle-container">
+    <svg class="triangle-svg" viewBox="0 0 300 260">
 
-<div class="triangle-container">
-  <svg class="triangle-svg" viewBox="0 0 300 260">
-    <!-- Background triangle first (render order matters) -->
-    <polygon points="150,0 0,260 300,260" class="triangle-bg" stroke-width="2"/>
-    
-    <!-- Group for the internal elements -->
-    <g transform="translate(-1.0,-1.0)">
-      <line x1="150" y1="0"    x2="150" y2="173.2" stroke="black" stroke-width="2"/>
-      <line x1="0"   y1="260"  x2="150" y2="173.2" stroke="black" stroke-width="2"/>
-      <line x1="300" y1="260"  x2="150" y2="173.2" stroke="black" stroke-width="2"/>
+      <polygon points="150,0 0,260 300,260" class="triangle-bg" stroke-width="2"/>
 
-      <a href="{{ url_for('layer') }}">
-        <polygon points="150,0 0,260 150,173.2" class="triangle-btn"/>
-        <text x="100" y="150" text-anchor="middle" font-size="12">Layering</text>
-      </a>
+      <g transform="translate(-1.0,-1.0)">
+        <line x1="150" y1="0"    x2="150" y2="173.2" stroke="black" stroke-width="2"/>
+        <line x1="0"   y1="260"  x2="150" y2="173.2" stroke="black" stroke-width="2"/>
+        <line x1="300" y1="260"  x2="150" y2="173.2" stroke="black" stroke-width="2"/>
+  
+        <a href="{{ url_for('layer') }}">
+          <polygon points="150,0 0,260 150,173.2" class="triangle-btn"/>
+          <text x="100" y="150" text-anchor="middle" font-size="12">Layering</text>
+        </a>
+  
+        <a href="{{ url_for('material') }}">
+          <polygon points="0,260 300,260 150,173.2" class="triangle-btn"/>
+          <text x="150" y="230" text-anchor="middle" font-size="12">Material</text>
+        </a>
+  
+        <a href="{{ url_for('clothing') }}">
+          <polygon points="300,260 150,0 150,173.2" class="triangle-btn"/>
+          <text x="200" y="150" text-anchor="middle" font-size="12">
+            <tspan x="200">Clothing</tspan>
+            <tspan x="200" dy="14">Type</tspan>
+          </text>
+        </a>
+      </g>
+    </svg>
+  </div>
+</div>   -->
+<div id="home-progress">
 
-      <a href="{{ url_for('material') }}">
-        <polygon points="0,260 300,260 150,173.2" class="triangle-btn"/>
-        <text x="150" y="230" text-anchor="middle" font-size="12">Material</text>
-      </a>
-
-      <a href="{{ url_for('clothing') }}">
-        <polygon points="300,260 150,0 150,173.2" class="triangle-btn"/>
-        <text x="200" y="150" text-anchor="middle" font-size="12">
-          <tspan x="200">Clothing</tspan>
-          <tspan x="200" dy="14">Type</tspan>
-        </text>
-      </a>
-    </g>
-  </svg>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  window.triangleData = {{ visit_log | tojson }};
+</script>
+<script src="{{ url_for('static', filename='homeTriangle.js') }}"></script>
 {% endblock %}
