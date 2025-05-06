@@ -5,8 +5,6 @@
 }
 
 /* Custom navbar background and text color */
-
-
 .custom-navbar .nav-link,
 .custom-navbar .navbar-brand {
   color: #d7d5d5 !important; /* White text */
@@ -16,7 +14,6 @@
 .custom-navbar .navbar-brand:hover {
   color: rgb(218, 165, 32) !important; /* Gold on hover */
 }
-
 
 body {
   font-size: 1.25rem; /* Base size: readable across screens */
@@ -41,7 +38,6 @@ body {
 .concept:first-of-type {
   margin: 8rem 0;
 }
-
 
 /* For headers in quiz sections */
 .layer-section h5,
@@ -196,7 +192,29 @@ body {
   object-fit: contain;
 }
 
-/* Responsive adjustments */
+/* Add spacing between navbar items */
+.custom-navbar .nav-item {
+  margin: 0 1rem;
+}
+
+/* ── Mobile: keep quiz content visible ── */
+@media (max-width: 768px) {
+  /* let each scenario grow to fit its content */
+  #scenario-1,
+  #scenario-2 {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* ensure the question/options panel sits on top */
+  .col-12.col-md-8 {
+    position: relative;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+}
 @media (max-width: 768px) {
   .uniform-img,
   .no-need-box,
@@ -235,31 +253,19 @@ body {
   border-radius: 2rem;
 }
 
-/* Add spacing between navbar items */
-.custom-navbar .nav-item {
-  margin: 0 1rem;
+/* ── Navbar toggler icon color ── */
+.custom-navbar .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='%23ccc' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/></svg>") !important;
 }
 
-/* ── Mobile: keep quiz content visible ── */
-@media (max-width: 768px) {
-  /* let each scenario grow to fit its content */
-  #scenario-1,
-  #scenario-2 {
-    height: auto !important;
-    overflow: visible !important;
-  }
-
-  /* ensure the question/options panel sits on top */
-  .col-12.col-md-8 {
-    position: relative;
-    z-index: 1;
-    background-color: rgba(255, 255, 255, 0.85);
-    padding: 1rem;
-    border-radius: 1rem;
-  }
+#home-progress {
+  /* force the container to a smaller viewport height */
+  height: 70vh !important;
+  overflow: hidden;
 }
-
-
-
-
-
+#home-progress svg {
+  /* ensure the injected SVG fills its container */
+  width: 100%;
+  height: 100%;
+  display: block;
+}
