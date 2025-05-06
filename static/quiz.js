@@ -80,18 +80,42 @@ function handleQuiz(containerId, selectorList, expected, feedback, prefix, resul
         icon.innerText = isCorrect ? '✓' : '✗';
         icon.classList.add(isCorrect ? 'text-success' : 'text-danger');
 
-        const scooter = document.getElementById(`scooter-container-${prefix}`);
+        const scooterImg = document.getElementById(`scooter-${prefix}`);
+        // Find or create the wrapper div
+        let wrapper = scooterImg.parentElement;
+        if (!wrapper.classList.contains('scooter-wrapper')) {
+          // If the wrapper doesn't exist yet, create it
+          wrapper = document.createElement('div');
+          wrapper.classList.add('scooter-wrapper', 'position-relative');
+          scooterImg.parentNode.insertBefore(wrapper, scooterImg);
+          wrapper.appendChild(scooterImg);
+        }
         const newImg = img.cloneNode(true);
         newImg.classList.add('dropped-item');
         newImg.setAttribute('data-layer', layer);
         newImg.setAttribute('draggable', false);
         newImg.style.position = 'absolute';
-        newImg.style.width    = '170px';
-        newImg.style.height   = 'auto';
-        newImg.style.top      = '30%';
-        newImg.style.left     = '26%';
-        newImg.style.zIndex   = layer==='base'?1: layer==='mid'?2:3;
-        scooter.appendChild(newImg);
+        newImg.style.width = '45%'; // Use percentage of parent width instead of fixed pixels
+        newImg.style.height = 'auto';
+        newImg.style.top = '25%';
+        newImg.style.left = '5%';
+        newImg.style.zIndex = layer === 'base' ? 1 : layer === 'mid' ? 2 : 3;
+        wrapper.appendChild(newImg);
+
+        const style = document.createElement('style');
+        style.textContent = `
+          .scooter-wrapper {
+            display: inline-block;
+            width: 100%;
+          }
+          .dropped-item {
+            pointer-events: none;
+          }
+        `;
+        if (!document.head.querySelector('style[data-for="scooter-game"]')) {
+          style.setAttribute('data-for', 'scooter-game');
+          document.head.appendChild(style);
+        }
       }
     });
 
