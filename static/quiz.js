@@ -80,41 +80,85 @@ function handleQuiz(containerId, selectorList, expected, feedback, prefix, resul
         icon.innerText = isCorrect ? '✓' : '✗';
         icon.classList.add(isCorrect ? 'text-success' : 'text-danger');
 
+        let originalScooterWidth = null;
+        let originalScooterHeight = null;
         const scooterImg = document.getElementById(`scooter-${prefix}`);
-        // Find or create the wrapper div
-        let wrapper = scooterImg.parentElement;
-        if (!wrapper.classList.contains('scooter-wrapper')) {
-          // If the wrapper doesn't exist yet, create it
-          wrapper = document.createElement('div');
-          wrapper.classList.add('scooter-wrapper', 'position-relative');
-          scooterImg.parentNode.insertBefore(wrapper, scooterImg);
-          wrapper.appendChild(scooterImg);
+        scooterImg.onload = function() {
+          originalScooterWidth = this.offsetWidth;
+          originalScooterHeight = this.offsetHeight;
+        };
+        
+        // If the image is already loaded, get dimensions now
+        if (scooterImg.complete) {
+          originalScooterWidth = scooterImg.offsetWidth;
+          originalScooterHeight = scooterImg.offsetHeight;
+        }
+
+        // Now modify the code that adds clothing to the scooter:
+        const scooterContainer = document.getElementById(`scooter-container-${prefix}`);
+  // Create a wrapper specifically for positioning items if it doesn't exist
+        let scooterWrapper = document.querySelector(`#scooter-container-${prefix} .scooter-wrapper`);
+        if (!scooterWrapper) {
+          scooterWrapper = document.createElement('div');
+          scooterWrapper.classList.add('scooter-wrapper');
+          scooterWrapper.style.position = 'relative';
+          scooterWrapper.style.display = 'inline-block';
+          
+          // Insert wrapper at the same position as the scooter image
+          scooterImg.parentNode.insertBefore(scooterWrapper, scooterImg);
+          scooterWrapper.appendChild(scooterImg);
         }
         const newImg = img.cloneNode(true);
         newImg.classList.add('dropped-item');
         newImg.setAttribute('data-layer', layer);
         newImg.setAttribute('draggable', false);
         newImg.style.position = 'absolute';
-        newImg.style.width = '45%'; // Use percentage of parent width instead of fixed pixels
+        // Calculate current scale ratio
+        const currentScooterWidth = scooterImg.offsetWidth;
+        const scaleRatio = currentScooterWidth / originalScooterWidth || 1;
+
+        // Set fixed clothing size proportional to original scooter size
+        const CLOTHING_BASE_WIDTH = 170; // Original intended width in pixels
+        newImg.style.width = (CLOTHING_BASE_WIDTH * scaleRatio) + 'px';
         newImg.style.height = 'auto';
+
+        // Position clothing
         newImg.style.top = '25%';
         newImg.style.left = '5%';
         newImg.style.zIndex = layer === 'base' ? 1 : layer === 'mid' ? 2 : 3;
-        wrapper.appendChild(newImg);
+        scooterWrapper.appendChild(newImg);
 
-        const style = document.createElement('style');
-        style.textContent = `
+        // Add a resize handler to maintain correct scaling
+        if (!window.clothingResizeHandlerAdded) {
+          window.clothingResizeHandlerAdded = true;
+          
+          window.addEventListener('resize', function() {
+            document.querySelectorAll('.dropped-item').forEach(function(item) {
+              const scooterImg = item.parentElement.querySelector('img[id^="scooter-"]');
+              if (scooterImg && originalScooterWidth) {
+                const currentScooterWidth = scooterImg.offsetWidth;
+                const scaleRatio = currentScooterWidth / originalScooterWidth;
+                item.style.width = (CLOTHING_BASE_WIDTH * scaleRatio) + 'px';
+              }
+            });
+          });
+        }
+
+        // Add CSS to make sure everything works correctly
+        const styleEl = document.createElement('style');
+        styleEl.textContent = `
           .scooter-wrapper {
+            position: relative;
             display: inline-block;
-            width: 100%;
           }
           .dropped-item {
             pointer-events: none;
+            transition: width 0.1s ease-out;
           }
         `;
         if (!document.head.querySelector('style[data-for="scooter-game"]')) {
-          style.setAttribute('data-for', 'scooter-game');
-          document.head.appendChild(style);
+          styleEl.setAttribute('data-for', 'scooter-game');
+          document.head.appendChild(styleEl);
         }
       }
     });
