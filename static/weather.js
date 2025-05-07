@@ -18,21 +18,25 @@ const weatherPictureData = {
     ],
     conditions: [
       {
+        condition: "Sunny",
         img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpng.pngtree.com%2Fpng-clipart%2F20201209%2Foriginal%2Fpngtree-sun-png-clipart-colored-png-image_5656301.png&f=1&nofb=1&ipt=49663e5690a2294067c32f67964607fdc1d61f7df01c73f414d034aafbda769e",
         alt: "Sun icon",
         advice: "Warmer"
       },
       {
+        condition: "Cloudy",
         img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F7084%2F7084486.png&f=1&nofb=1&ipt=101246e1f53384ad7e3a58665f024666e4cf2479c8965b4870957a1e6601e32c",
         alt: "Cloud icon",
         advice: "Around the same"
       },
       {
+        condition: "Windy",
         img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn3.iconfinder.com%2Fdata%2Ficons%2Fnature-emoji%2F50%2FWindy-1024.png&f=1&nofb=1&ipt=6ef5fcefdede65d5a0ecd9522939e19f7d7658cc4f6da1b7e1a1bfa0cba2e597",
         alt: "Wind icon",
         advice: "Colder"
       },
       {
+        condition: "Rain/Snow",
         img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F3262%2F3262929.png&f=1&nofb=1&ipt=1e793676beed323fa9523c62a8763bd8afe765def17a4956cf82d30e699e3d8e",
         alt: "Snow/rain icon",
         advice: "Wet"
@@ -77,15 +81,17 @@ const weatherPictureData = {
   
   function renderConditions(selector) {
     const container = $(selector);
-    weatherPictureData.conditions.forEach(({ img, alt, advice }) => {
+    weatherPictureData.conditions.forEach(({ condition, img, alt, advice }) => {
       container.append(`
         <div class="col-md-3 text-center">
+          <div class="fw-bold">${condition}</div>
           <img src="${img}" alt="${alt}" class="img-fluid my-2" style="max-height: 100px;" />
           <div class="advice-bubble mt-2">${advice}</div>
         </div>
       `);
     });
   }
+  
 
   function renderHumidity(selector) {
     const container = $(selector);
