@@ -197,6 +197,10 @@ body {
   margin: 0 1rem;
 }
 
+.scoot-title{
+  margin-left: 1rem;
+}
+
 /* ── Mobile: keep quiz content visible ── */
 @media (max-width: 768px) {
   /* let each scenario grow to fit its content */
