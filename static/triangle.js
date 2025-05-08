@@ -50,7 +50,6 @@
           />
           <text x="200" y="150" text-anchor="middle" font-size="12" fill="${getText('weather')}">
             <tspan x="200">Weather</tspan>
-            <tspan x="200" dy="14">Type</tspan>
           </text>
         </a>
   
