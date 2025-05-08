@@ -21,7 +21,7 @@ const weatherPictureData = {
         condition: "Sunny",
         img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpng.pngtree.com%2Fpng-clipart%2F20201209%2Foriginal%2Fpngtree-sun-png-clipart-colored-png-image_5656301.png&f=1&nofb=1&ipt=49663e5690a2294067c32f67964607fdc1d61f7df01c73f414d034aafbda769e",
         alt: "Sun icon",
-        advice: "Warmer"
+        advice: "Warmer than actual temperature"
       },
       {
         condition: "Cloudy",
@@ -33,13 +33,13 @@ const weatherPictureData = {
         condition: "Windy",
         img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn3.iconfinder.com%2Fdata%2Ficons%2Fnature-emoji%2F50%2FWindy-1024.png&f=1&nofb=1&ipt=6ef5fcefdede65d5a0ecd9522939e19f7d7658cc4f6da1b7e1a1bfa0cba2e597",
         alt: "Wind icon",
-        advice: "Colder"
+        advice: "Colder than actual temperatre"
       },
       {
         condition: "Rain/Snow",
         img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F3262%2F3262929.png&f=1&nofb=1&ipt=1e793676beed323fa9523c62a8763bd8afe765def17a4956cf82d30e699e3d8e",
         alt: "Snow/rain icon",
-        advice: "Wet"
+        advice: "Need water proof layers"
       }
     ],
     humidity: [
@@ -52,7 +52,7 @@ const weatherPictureData = {
       },
       {
         label: "Comfortable",
-        subtext: "40%RH – 60%",
+        subtext: "40%RH – 60%RH",
         advice: "Ideal cooling range",
         img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg.freepik.com%2Fpremium-photo%2Fstock-image-office-tabletop-fan-white-background-compact-cooling-breeze-generative-ai_184076-5167.jpg&f=1&nofb=1&ipt=9e1d1068bc6ca7b07f0d2423b67434c3154900a8f4d2ddd33f6badc6a05a6cbd",
         alt: "Standard electric fan"
