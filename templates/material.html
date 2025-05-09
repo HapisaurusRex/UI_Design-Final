@@ -448,6 +448,7 @@
         {
             name: "Wool",
             image: "Materials/wool.jpg",
+            alt: "image of wool",
             description: "Wool is a natural fiber made from animal hair.",
             properties: {
             breathability: 0.5,   
@@ -467,6 +468,7 @@
         {
             name: "Cotton",
             image: "Materials/cotton.jpg",
+            alt: "image of cotton",
             description: "Cotton is a natural fiber made from the Gossypium plant.",
             properties: {
             breathability: 1.0,
@@ -485,6 +487,7 @@
         {
             name: "Fleece",
             image: "Materials/fleece.jpg",
+            alt: "image of fleece",
             description: "Fleece is a synthetic fiber that looks like fur.",
             properties: {
             breathability: 0.2,
@@ -508,6 +511,7 @@
         {
             name: "Down",
             image: "Materials/down.jpg",
+            alt: "image of down",
             description: "Down is a natural fiber made from bird feathers.",
             properties: {
             breathability: 0.5,
@@ -526,6 +530,7 @@
         {
             name: "Synthetic",
             image: "Materials/synthetic.jpg",
+            alt: "image of synthetics",
             description: "Synthetics are man made fibers from chemicals (usually oil).",
             properties: {
             breathability: 0.2,
@@ -556,7 +561,7 @@
         const card = document.createElement("div");
         card.className = "material-card";
         card.innerHTML = `
-            <img src="/static/images/${mat.image}" alt="${mat.name}" />
+            <img src="/static/images/${mat.image}" alt="${mat.alt}" />
             <p>${mat.name}</p>
         `;
         card.onclick = () => {
